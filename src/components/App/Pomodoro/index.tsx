@@ -281,11 +281,11 @@ function Pomodoro({ visible, timerActive, setTimerActive }: Props) {
 			</Section>
 
 			<AudioPlayer
-				url={`src/assets/sounds/alarm/${settings['alarm sound']}.mp3`}
+				url={`/assets/sounds/alarm/${settings['alarm sound']}.mp3`}
 				ref={alarmAudioPlayer}
 			/>
 			<AudioPlayer
-				url={`src/assets/sounds/focus/${settings['focus sound']}.mp3`}
+				url={`/assets/sounds/focus/${settings['focus sound']}.mp3`}
 				ref={focusAudioPlayer}
 			/>
 		</>
