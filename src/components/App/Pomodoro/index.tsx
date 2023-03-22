@@ -88,7 +88,7 @@ function Pomodoro({ visible, timerActive, setTimerActive }: Props) {
 
 	function handleStartTimer() {
 		let prevTimerActive = timerActive;
-		if (!prevTimerActive) {
+		if (!prevTimerActive && stage === 'focus mode') {
 			handleAudio('focus volume', true);
 		} else {
 			handleAudio('focus volume', false);
@@ -183,7 +183,6 @@ function Pomodoro({ visible, timerActive, setTimerActive }: Props) {
 				key="pomodoro"
 				sx={`flex flex-col items-center font-main`}
 			>
-				{/* Container */}
 				<Container
 					current={timer[stage]}
 					initial={minutesToSeconds(settings[stage])}
@@ -200,7 +199,7 @@ function Pomodoro({ visible, timerActive, setTimerActive }: Props) {
 										stage === item
 											? 'bg-red-500  font-semibold'
 											: 'bg-black text-black bg-opacity-10 font-medium'
-									} text-white  rounded-md capitalize w-full transition-colors duration-500 text-sm md:text-lg lg:text-xl`}
+									} text-white  rounded-full capitalize w-full transition-colors duration-500 text-sm md:text-lg lg:text-xl`}
 								>
 									{item}
 								</Button>
@@ -216,7 +215,7 @@ function Pomodoro({ visible, timerActive, setTimerActive }: Props) {
 							{/* timerActive/Pause */}
 							<Button
 								onClick={handleStartTimer}
-								sx="w-full bg-red-500  text-white rounded-md  tracking-widest font-semibold text-2xl lg:text-3xl"
+								sx="w-full bg-red-500  text-white rounded-full  tracking-widest font-semibold text-2xl lg:text-3xl"
 							>
 								{!timerActive ? 'START' : 'PAUSE'}
 							</Button>
@@ -245,7 +244,7 @@ function Pomodoro({ visible, timerActive, setTimerActive }: Props) {
 				</Container>
 
 				{/* Counter */}
-				<div className="-mt-5 bg-white shadow-lg pt-12 px-10 pb-8 rounded-2xl border z-10 text-neutral-500">
+				<div className="-mt-5 bg-white shadow-lg pt-12 px-10 pb-8 rounded-3xl border z-10 text-neutral-500">
 					<h3 className="text-center font-semibold  mb-2 text-lg md:text-3xl lg:text-4xl">
 						TASK COMPLETED: {counter}
 					</h3>
@@ -257,7 +256,7 @@ function Pomodoro({ visible, timerActive, setTimerActive }: Props) {
 					<button
 						disabled={counter < 1}
 						onClick={() => setCounter(0)}
-						className="outline-none active:bg-neutral-200 text-center mx-auto  block text-xs bg-neutral-100 py-2 px-4 rounded-md"
+						className="outline-none active:bg-neutral-200 text-center mx-auto  block text-xs bg-neutral-100 py-2 px-4 rounded-full"
 					>
 						Clear Progress
 					</button>

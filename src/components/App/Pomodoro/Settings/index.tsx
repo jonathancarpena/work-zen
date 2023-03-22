@@ -41,7 +41,7 @@ function Settings({ settings, setSettings, playAudio }: Props) {
 					open
 						? 'z-50 shadow-xl'
 						: '-z-10 translate-y-full text-transparent md:-translate-y-[120%] '
-				} flex  flex-col fixed w-full overflow-y-auto max-h-[95vh] left-1/2 -translate-x-1/2 bottom-0 bg-white transition-all duration-500 border rounded-t-3xl  md:rounded-t-none md:rounded-b-2xl md:top-0 md:max-w-lg md:bottom-auto`}
+				} flex  flex-col fixed w-full overflow-y-auto max-h-[95vh] left-1/2 -translate-x-1/2 bottom-0 bg-white transition-all duration-500 border rounded-t-3xl  md:rounded-t-none md:rounded-b-3xl md:top-0 md:max-w-lg md:bottom-auto`}
 			>
 				<h3 className="px-5 py-5 border-b font-bold text-lg mb-5">
 					Pomodoro Settings

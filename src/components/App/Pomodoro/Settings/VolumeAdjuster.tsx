@@ -56,7 +56,7 @@ function VolumeAdjuster({
 					}}
 					dragElastic={0}
 					dragMomentum={false}
-					className="bg-white border shadow-sm w-auto  aspect-square rounded-[100%] h-[150%] absolute -right-3 -top-1"
+					className="cursor-grab active:cursor-grabbing bg-white border shadow-sm w-auto  aspect-square rounded-[100%] h-[150%] absolute -right-3 -top-1"
 				/>
 			</div>
 		</div>

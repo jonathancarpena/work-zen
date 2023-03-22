@@ -11,7 +11,7 @@ function Container({ children, current, initial }: Props) {
 		return `${result - 0.1}`;
 	}
 	return (
-		<div className="mx-auto w-full bg-white p-4 md:p-6 lg:p-10 rounded-2xl shadow-lg border z-20 relative overflow-hidden">
+		<div className="mx-auto w-full bg-white p-4 md:p-6 lg:p-10 rounded-3xl shadow-lg border z-20 relative overflow-hidden">
 			<div
 				style={{
 					opacity: generatePercentFill(current),
