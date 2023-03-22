@@ -1,38 +1,34 @@
 // Utils
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { minutesToSeconds, formatTime } from '../../../lib/utils';
 
 // Components
 import Settings from './Settings';
 import Container from './Container';
+import AudioPlayer from './AudioPlayer';
 import Section from '../../Layout/Section';
 import Button from '../../Button';
 import { FiSkipForward, FiStar } from 'react-icons/fi';
 
-type Timer = 'focus mode' | 'short break' | 'long break';
+// Types / Interfaces
+import { PomodoroSettings, TimerStages } from '../../../lib/interfaces';
 
-export interface State {
-	settings: {
-		'focus mode': number;
-		'short break': number;
-		'long break': number;
-		'long break intervals': number;
-	};
+interface State {
+	settings: PomodoroSettings;
 	timer: {
 		'focus mode': number;
 		'short break': number;
 		'long break': number;
 	};
-	stage: Timer;
-
+	stage: TimerStages;
 	counter: number;
 }
-
 interface Props {
 	visible: boolean;
 	timerActive: boolean;
 	setTimerActive: React.Dispatch<React.SetStateAction<boolean>>;
 }
+const TIMERS: TimerStages[] = ['focus mode', 'short break', 'long break'];
 
 function Pomodoro({ visible, timerActive, setTimerActive }: Props) {
 	const [settings, setSettings] = useState<State['settings']>({
@@ -40,6 +36,11 @@ function Pomodoro({ visible, timerActive, setTimerActive }: Props) {
 		'short break': 4,
 		'long break': 15,
 		'long break intervals': 4,
+		'alarm repeat': 1,
+		'alarm volume': 1,
+		'alarm sound': 'xylophone',
+		'focus sound': 'whiteNoise',
+		'focus volume': 1,
 	});
 	const [timer, setTimer] = useState<State['timer']>({
 		'focus mode': minutesToSeconds(settings['focus mode']),
@@ -48,8 +49,8 @@ function Pomodoro({ visible, timerActive, setTimerActive }: Props) {
 	});
 	const [stage, setStage] = useState<State['stage']>('focus mode');
 	const [counter, setCounter] = useState<State['counter']>(0);
-
-	const TIMERS: Timer[] = ['focus mode', 'short break', 'long break'];
+	const alarmAudioPlayer = useRef<any>();
+	const focusAudioPlayer = useRef<any>();
 	let untilBreak =
 		settings['long break intervals'] -
 		(counter % settings['long break intervals']);
@@ -67,6 +68,8 @@ function Pomodoro({ visible, timerActive, setTimerActive }: Props) {
 		}
 
 		if (timer[stage] === 0) {
+			handleAudio('alarm volume', true);
+			handleAudio('focus volume', false);
 			handleNext();
 		}
 		return () => clearInterval(interval);
@@ -77,8 +80,26 @@ function Pomodoro({ visible, timerActive, setTimerActive }: Props) {
 		handleReset();
 	}, [settings, stage]);
 
+	// Volume Changes
+	useEffect(() => {
+		alarmAudioPlayer.current.volume = settings['alarm volume'];
+		focusAudioPlayer.current.volume = settings['focus volume'];
+	}, [settings['alarm volume'], settings['focus volume']]);
+
+	function handleStartTimer() {
+		let prevTimerActive = timerActive;
+		if (!prevTimerActive) {
+			handleAudio('focus volume', true);
+		} else {
+			handleAudio('focus volume', false);
+		}
+
+		handleAudio('alarm volume', false);
+		setTimerActive(!timerActive);
+	}
+
 	function handleNext() {
-		let nextStage: Timer = 'focus mode';
+		let nextStage: TimerStages = 'focus mode';
 
 		if (stage === 'focus mode') {
 			// Increase Focus Counter
@@ -93,10 +114,8 @@ function Pomodoro({ visible, timerActive, setTimerActive }: Props) {
 			}
 		}
 
-		setTimeout(() => {
-			handleReset();
-			setStage(nextStage);
-		}, 1000);
+		setStage(nextStage);
+		handleReset();
 	}
 
 	function handleReset() {
@@ -108,7 +127,7 @@ function Pomodoro({ visible, timerActive, setTimerActive }: Props) {
 		});
 	}
 
-	function handleStageChange(item: Timer) {
+	function handleStageChange(item: TimerStages) {
 		if (timerActive) {
 			let confirm = window.confirm(
 				'The timer is still running, are you sure you want to switch?'
@@ -121,6 +140,42 @@ function Pomodoro({ visible, timerActive, setTimerActive }: Props) {
 		}
 	}
 
+	function handleAudio(
+		type: 'alarm volume' | 'focus volume',
+		turnOn: boolean,
+		test: boolean = false
+	) {
+		if (type === 'alarm volume') {
+			if (turnOn && !test) {
+				// Repeat x 15 second sound
+				let timeStop = settings['alarm repeat'] * 15000;
+				alarmAudioPlayer.current.play();
+				setTimeout(() => {
+					alarmAudioPlayer.current.pause();
+				}, timeStop);
+			} else if (turnOn && test) {
+				// For Settings
+				alarmAudioPlayer.current.play();
+				setTimeout(() => {
+					alarmAudioPlayer.current.pause();
+				}, 5000);
+			} else {
+				alarmAudioPlayer.current.pause();
+			}
+		} else if (type === 'focus volume') {
+			if (turnOn && !test) {
+				focusAudioPlayer.current.play();
+			} else if (turnOn && test) {
+				// For Settings
+				focusAudioPlayer.current.play();
+				setTimeout(() => {
+					focusAudioPlayer.current.pause();
+				}, 5000);
+			} else {
+				focusAudioPlayer.current.pause();
+			}
+		}
+	}
 	return (
 		<>
 			<Section
@@ -136,10 +191,10 @@ function Pomodoro({ visible, timerActive, setTimerActive }: Props) {
 					{/* Main Content */}
 					<div className="flex flex-col space-y-10 items-center mx-auto lg:w-1/2 ">
 						{/* Timer Stages */}
-						<div className="grid grid-cols-3 gap-2  place-items-center md:gap-5 lg:w-full">
+						<div className="grid grid-cols-3 gap-2 w-full place-items-center md:gap-5 md:w-auto lg:w-full">
 							{TIMERS.map((item) => (
 								<Button
-									key={item}
+									key={`tabs-${item}`}
 									onClick={() => handleStageChange(item)}
 									sx={`${
 										stage === item
@@ -160,7 +215,7 @@ function Pomodoro({ visible, timerActive, setTimerActive }: Props) {
 						<div className="w-full  lg:relative">
 							{/* timerActive/Pause */}
 							<Button
-								onClick={() => setTimerActive(!timerActive)}
+								onClick={handleStartTimer}
 								sx="w-full bg-red-500  text-white rounded-md  tracking-widest font-semibold text-2xl lg:text-3xl"
 							>
 								{!timerActive ? 'START' : 'PAUSE'}
@@ -174,7 +229,7 @@ function Pomodoro({ visible, timerActive, setTimerActive }: Props) {
 									timerActive
 										? 'opacity-100'
 										: 'opacity-0 select-none cursor-default'
-								}  text-white shadow-md bg-white text-black fixed bottom-10 right-3 rounded-lg overflow-hidden text-3xl transition-opacity duration-200 md:shadow-none md:text-4xl md:absolute md:bottom-1/2 md:translate-y-1/2 md:right-5   lg:bottom-0 lg:translate-y-0 lg:top-0 lg:-right-[70px]`}
+								}  shadow-md bg-white text-black fixed bottom-10 right-3 rounded-lg overflow-hidden text-3xl transition-opacity duration-200 md:shadow-none md:text-4xl md:absolute md:bottom-1/2 md:translate-y-1/2 md:right-5   lg:bottom-0 lg:translate-y-0 lg:top-0 lg:-right-[70px]`}
 							>
 								<FiSkipForward />
 							</Button>
@@ -182,34 +237,57 @@ function Pomodoro({ visible, timerActive, setTimerActive }: Props) {
 					</div>
 
 					{/* Settings Button */}
-					<Settings settings={settings} setSettings={setSettings} />
+					<Settings
+						settings={settings}
+						setSettings={setSettings}
+						playAudio={handleAudio}
+					/>
 				</Container>
 
 				{/* Counter */}
-				<div className="-mt-5 bg-white shadow-lg pt-12 px-10 pb-8 rounded-2xl border z-10">
-					<h3 className="text-center font-semibold  text-neutral-500 mb-2 text-lg md:text-3xl lg:text-4xl">
+				<div className="-mt-5 bg-white shadow-lg pt-12 px-10 pb-8 rounded-2xl border z-10 text-neutral-500">
+					<h3 className="text-center font-semibold  mb-2 text-lg md:text-3xl lg:text-4xl">
 						TASK COMPLETED: {counter}
 					</h3>
-					<h4 className="text-center text-neutral-500 text-xs md:text-sm lg:text-base">
+					<h4 className="text-center  text-xs md:text-sm lg:text-base mb-4">
 						Need
 						<span className="ml-1 mr-0.5">{untilBreak}</span> More Task
 						{untilBreak > 1 ? 's' : ''} for a Long Break
 					</h4>
+					<button
+						disabled={counter < 1}
+						onClick={() => setCounter(0)}
+						className="outline-none active:bg-neutral-200 text-center mx-auto  block text-xs bg-neutral-100 py-2 px-4 rounded-md"
+					>
+						Clear Progress
+					</button>
 				</div>
 
 				{/* Visiual Counter */}
 				{counter > 0 && (
 					<ul className="grid grid-cols-4 gap-3 mt-6 md:mt-8 lg:mt-10">
 						{Array(counter)
-							.fill(0)
-							.map((item, idx) => (
-								<li key={idx} className="text-xl md:text-3xl text-neutral-300">
+							.fill(counter)
+							.map(() => (
+								<li
+									key={`Star-${Math.random()}`}
+									className="text-xl md:text-3xl text-neutral-300"
+								>
 									<FiStar />
 								</li>
 							))}
 					</ul>
 				)}
 			</Section>
+
+			<AudioPlayer
+				url={`src/assets/sounds/alarm/${settings['alarm sound']}.mp3`}
+				ref={alarmAudioPlayer}
+			/>
+			<AudioPlayer
+				url={`src/assets/sounds/focus/${settings['focus sound']}.mp3`}
+				ref={focusAudioPlayer}
+			/>
 		</>
 	);
 }
