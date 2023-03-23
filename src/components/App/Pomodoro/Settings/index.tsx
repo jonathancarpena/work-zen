@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { FiSettings, FiClock, FiVolume2 } from 'react-icons/fi';
-import Button from '../../../Button';
 import VolumeAdjuster from './VolumeAdjuster';
 import { PomodoroSettings } from '../../../../lib/interfaces';
 
@@ -28,20 +27,30 @@ function Settings({ settings, setSettings, playAudio }: Props) {
 
 	return (
 		<>
-			<Button
+			<button
 				onClick={() => setOpen(!open)}
-				sx="absolute top-1/2 -translate-y-1/2  md:translate-y-0 md:h-max md:left-auto md:w-max md:absolute md:right-5 md:top-6 lg:top-7  flex items-center text-3xl bg-white rounded-lg overflow-hidden text-black "
+				className={`${
+					open
+						? ' border-main-dark-darker  dark:bg-main-light-lighter dark:text-black    bg-main-dark-0 hover:bg-main-dark-lighter text-white dark:hover:bg-main-dark-0  hover:text-white dark:border-main-light-darker'
+						: 'border-main-light-darker dark:border-main-dark-darker  bg-main-light-lighter text-black hover:bg-main-light-0   dark:bg-main-dark-lighter dark:text-white dark:hover:bg-main-dark-0 dark:hover:text-white'
+				} w-full h-11 md:text-lg md:h-14 flex justify-center items-center space-x-2 active:scale-90 rounded-md transition-transform duration-100 border  text-sm uppercase `}
 			>
-				<FiSettings />
-			</Button>
+				<FiSettings className="text-base md:text-lg" />
+				<span>Settings</span>
+			</button>
 
+			<div
+				className={`${
+					open ? 'opacity-30 z-40' : 'opacity-0 -z-10'
+				} w-screen h-screen inset-0 bg-pureBlack fixed -left-3 md:-left-4`}
+			/>
 			{/* Settings  */}
 			<form
 				className={`${
 					open
 						? 'z-50 shadow-xl'
-						: '-z-10 translate-y-full text-transparent md:-translate-y-[120%] '
-				} flex  flex-col fixed w-full overflow-y-auto max-h-[95vh] left-1/2 -translate-x-1/2 bottom-[57px] bg-white transition-all duration-500 border rounded-t-3xl  md:rounded-t-none md:rounded-b-3xl md:top-0 md:max-w-lg md:bottom-auto`}
+						: '-z-10 translate-y-full text-transparent lg:-translate-y-[120%] opacity-0'
+				} flex flex-col fixed w-full overflow-y-auto max-h-[95vh] -left-3 lg:left-1/2 lg:-translate-x-1/2 bottom-14 md:bottom-16 dark:bg-black bg-white transition-all duration-500 border dark:border-pureBlack rounded-t-xl  lg:rounded-t-none lg:rounded-b-3xl lg:top-0 lg:max-w-lg lg:bottom-auto`}
 			>
 				<h3 className="px-5 py-5 border-b font-bold text-lg mb-5">
 					Pomodoro Settings
@@ -67,7 +76,7 @@ function Settings({ settings, setSettings, playAudio }: Props) {
 								id="focusMode"
 								type="number"
 								name="focus mode"
-								className="bg-neutral-100 p-2 rounded-sm focus:bg-white focus:outline-neutral-200 text-start"
+								className="bg-main-light-darker p-2 rounded-sm focus:bg-main-light-lighter focus:outline-main-dark-darker text-start dark:bg-main-dark-darker dark:focus:bg-main-dark-lighter  "
 								min={1}
 								max={99}
 								step={0.5}
@@ -90,7 +99,7 @@ function Settings({ settings, setSettings, playAudio }: Props) {
 								min={1}
 								step={0.5}
 								max={99}
-								className="bg-neutral-100 p-2 rounded-sm focus:bg-white focus:outline-neutral-200 text-start"
+								className="bg-main-light-darker p-2 rounded-sm focus:bg-main-light-lighter focus:outline-main-dark-darker text-start dark:bg-main-dark-darker dark:focus:bg-main-dark-lighter  "
 								value={settings['short break']}
 								onChange={handleTimerSettingsChange}
 							/>
@@ -110,7 +119,7 @@ function Settings({ settings, setSettings, playAudio }: Props) {
 								step={0.5}
 								min={1}
 								max={99}
-								className="bg-neutral-100 p-2 rounded-sm focus:bg-white focus:outline-neutral-200 text-start"
+								className="bg-main-light-darker p-2 rounded-sm focus:bg-main-light-lighter focus:outline-main-dark-darker text-start dark:bg-main-dark-darker dark:focus:bg-main-dark-lighter  "
 								value={settings['long break']}
 								onChange={handleTimerSettingsChange}
 							/>
@@ -128,7 +137,7 @@ function Settings({ settings, setSettings, playAudio }: Props) {
 							name="long break intervals"
 							min="1"
 							max="99"
-							className="bg-neutral-100 p-2 rounded-sm focus:bg-white focus:outline-neutral-200 max-w-[65px] text-center"
+							className="bg-main-light-darker p-2 rounded-sm focus:bg-main-light-lighter focus:outline-main-dark-darker text-start dark:bg-main-dark-darker dark:focus:bg-main-dark-lighter  "
 							value={settings['long break intervals']}
 							onChange={handleTimerSettingsChange}
 						/>
@@ -149,7 +158,7 @@ function Settings({ settings, setSettings, playAudio }: Props) {
 							<select
 								id="alarmSound"
 								name="alarm sound"
-								className="bg-neutral-100 p-2 rounded-sm focus:bg-white focus:outline-neutral-200 text-start min-w-max"
+								className="bg-main-light-darker p-2 rounded-sm focus:bg-main-light-lighter focus:outline-main-dark-darker text-start dark:bg-main-dark-darker dark:focus:bg-main-dark-lighter min-w-max"
 								value={settings['alarm sound']}
 								onChange={handleTimerSettingsChange}
 							>
@@ -179,7 +188,7 @@ function Settings({ settings, setSettings, playAudio }: Props) {
 								name="alarm repeat"
 								type="number"
 								min={1}
-								className="bg-neutral-100 p-2 rounded-sm focus:bg-white focus:outline-neutral-200 text-start max-w-[65px] "
+								className="bg-main-light-darker p-2 rounded-sm focus:bg-main-light-lighter focus:outline-main-dark-darker text-start dark:bg-main-dark-darker dark:focus:bg-main-dark-lighter  max-w-[65px]"
 								value={settings['alarm repeat']}
 								onChange={handleTimerSettingsChange}
 							/>
@@ -193,7 +202,7 @@ function Settings({ settings, setSettings, playAudio }: Props) {
 							<select
 								id="focusSound"
 								name="focus sound"
-								className="bg-neutral-100 p-2 rounded-sm focus:bg-white focus:outline-neutral-200 text-start min-w-max"
+								className="bg-main-light-darker p-2 rounded-sm focus:bg-main-light-lighter focus:outline-main-dark-darker text-start dark:bg-main-dark-darker dark:focus:bg-main-dark-lighter min-w-max "
 								value={settings['focus sound']}
 								onChange={handleTimerSettingsChange}
 							>
@@ -219,7 +228,7 @@ function Settings({ settings, setSettings, playAudio }: Props) {
 				<button
 					type="button"
 					onClick={() => setOpen(false)}
-					className="flex justify-center md:bg-neutral-50  md:active:bg-neutral-100 absolute top-0 right-5 md:right-auto md:relative"
+					className="flex justify-center md:bg-main-light-0  md:active:bg-main-light-darker md:dark:bg-main-dark-darker md:dark:active:bg-pureBlack absolute top-0 right-5 md:right-auto md:relative"
 				>
 					<span className="py-5  active:scale-90 w-full tracking-wide font-semibold">
 						Close ✖

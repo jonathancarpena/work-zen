@@ -22,7 +22,7 @@ function Section({ children, sx, isVisible, uniqueKey }: Props) {
 						},
 					}}
 					exit={{ opacity: 0, y: 50 }}
-					className={`${sx}`}
+					className={`${sx} pt-1`}
 				>
 					{children}
 				</motion.section>

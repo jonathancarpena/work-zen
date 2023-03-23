@@ -45,7 +45,7 @@ function VolumeAdjuster({
 			</span>
 
 			{/* Slide */}
-			<div className=" w-[100px] bg-neutral-100 h-4 relative rounded-full">
+			<div className=" w-[100px] bg-main-light-darker dark:bg-main-dark-darker h-4 relative rounded-full">
 				{/* Thumb */}
 				<motion.div
 					style={{ x }}
@@ -56,7 +56,7 @@ function VolumeAdjuster({
 					}}
 					dragElastic={0}
 					dragMomentum={false}
-					className="cursor-grab active:cursor-grabbing bg-white border shadow-sm w-auto  aspect-square rounded-[100%] h-[150%] absolute -right-3 -top-1"
+					className="cursor-grab active:cursor-grabbing bg-white dark:bg-main-dark-lighter dark:border-pureBlack border-2 shadow-sm w-auto  aspect-square rounded-[100%] h-[150%] absolute -right-3 -top-1"
 				/>
 			</div>
 		</div>

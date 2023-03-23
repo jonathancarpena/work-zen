@@ -7,7 +7,6 @@ import Settings from './Settings';
 import Container from './Container';
 import AudioPlayer from './AudioPlayer';
 import Section from '../../Layout/Section';
-import Button from '../../Button';
 import { FiSkipForward, FiStar } from 'react-icons/fi';
 
 // Types / Interfaces
@@ -181,82 +180,85 @@ function Pomodoro({ visible, timerActive, setTimerActive }: Props) {
 			<Section
 				isVisible={visible}
 				uniqueKey="pomodoro"
-				sx={`flex flex-col items-center font-main`}
+				sx="text-black dark:text-white max-w-screen-md mx-auto"
 			>
-				<Container
-					current={timer[stage]}
-					initial={minutesToSeconds(settings[stage])}
-				>
-					{/* Main Content */}
-					<div className="flex flex-col space-y-10 items-center mx-auto lg:w-1/2 ">
-						{/* Timer Stages */}
-						<div className="grid grid-cols-3 gap-2 w-full place-items-center md:gap-5 md:w-auto lg:w-full">
-							{TIMERS.map((item) => (
-								<Button
-									key={`tabs-${item}`}
-									onClick={() => handleStageChange(item)}
-									sx={`${
-										stage === item
-											? 'bg-red-500  font-semibold'
-											: 'bg-black text-black bg-opacity-10 font-medium'
-									} text-white  rounded-full capitalize w-full transition-colors duration-500 text-sm md:text-lg lg:text-xl`}
-								>
-									{item}
-								</Button>
-							))}
-						</div>
-
-						{/* Timer */}
-						<h1 className="text-8xl md:text-9xl font-bold text-center text-black ">
-							{formatTime(timer[stage])}
-						</h1>
-
-						<div className="w-full lg:relative">
-							{/* timerActive/Pause */}
-							<Button
-								onClick={handleStartTimer}
-								sx="w-full bg-red-500  text-white rounded-full  tracking-widest font-semibold text-2xl lg:text-3xl"
+				{/* Timer */}
+				<div className="mx-auto ">
+					{/* Stages */}
+					<div className="grid grid-cols-3 gap-3 w-full place-items-center md:gap-4 md:w-auto lg:w-full">
+						{TIMERS.map((item) => (
+							<button
+								key={`tabs-${item}`}
+								onClick={() => handleStageChange(item)}
+								className={`${
+									stage === item
+										? 'bg-main-dark-darker text-white dark:bg-main-light-lighter dark:text-black'
+										: 'bg-main-light-lighter text-black dark:bg-main-dark-lighter dark:text-white'
+								} border border-main-light-darker dark:border-main-dark-darker text-sm active:scale-90 h-11 w-full rounded-lg uppercase transition-transform duration-100 md:text-lg md:h-14`}
 							>
-								{!timerActive ? 'START' : 'PAUSE'}
-							</Button>
-
-							{/* Next Stage */}
-							<Button
-								disabled={!timerActive}
-								onClick={handleNext}
-								sx={`${
-									timerActive
-										? 'opacity-100'
-										: 'opacity-0 select-none cursor-default'
-								} bg-white text-black rounded-lg overflow-hidden text-3xl transition-opacity duration-200 md:text-4xl absolute bottom-1/2 translate-y-1/2 right-5 lg:bottom-0 lg:translate-y-0 lg:top-0 lg:-right-[70px]`}
-							>
-								<FiSkipForward />
-							</Button>
-						</div>
+								{item}
+							</button>
+						))}
 					</div>
 
-					{/* Settings Button */}
-					<Settings
-						settings={settings}
-						setSettings={setSettings}
-						playAudio={handleAudio}
-					/>
-				</Container>
+					{/* Timer */}
+					<h1 className="text-9xl md:text-[12rem] lg:text-[15rem] font-bold text-center my-8 text-inherit">
+						{formatTime(timer[stage])}
+					</h1>
+
+					{/* Start Button */}
+					<button
+						onClick={handleStartTimer}
+						className={`outline-none z-10 relative w-full mb-5`}
+					>
+						<span
+							className={`${
+								timerActive
+									? 'translate-y-5 bg-main-dark-darker text-white dark:bg-main-light-lighter dark:text-black'
+									: 'active:translate-y-5 bg-main-dark-0 text-white dark:bg-main-light-0 dark:text-black'
+							} h-16 md:h-20 text-3xl md:text-4xl  flex justify-center items-center w-full rounded-xl   transition-transform ease-in duration-100 `}
+						>
+							{!timerActive ? 'START' : 'PAUSE'}
+						</span>
+
+						<div
+							className={`w-full h-full bg-main-dark-darker dark:bg-main-light-0 brightness-75  absolute left-0 top-5 rounded-xl -z-10`}
+						/>
+					</button>
+
+					{/* Settings, Skip Button */}
+					<div className="mt-6 flex space-x-3 md:mt-8 md:space-x-4  justify-center ">
+						<Settings
+							settings={settings}
+							setSettings={setSettings}
+							playAudio={handleAudio}
+						/>
+
+						<button
+							disabled={!timerActive}
+							onClick={handleNext}
+							className={`w-full h-11 text-sm md:text-lg md:h-14 flex justify-center items-center space-x-2  rounded-md transition-transform duration-100 border border-main-light-darker dark:border-main-dark-darker active:scale-90 bg-main-light-lighter text-black hover:bg-main-light-0   dark:bg-main-dark-lighter dark:text-white dark:hover:bg-main-dark-0 dark:hover:text-white uppercase `}
+						>
+							<FiSkipForward className="text-base md:text-lg" />
+							<span>Next</span>
+						</button>
+					</div>
+				</div>
 
 				{/* Counter */}
-				<div className="-mt-5 bg-white shadow-lg pt-12 px-10 pb-8 rounded-3xl border z-10 text-neutral-500">
-					<h3 className="text-center font-semibold  mb-2 text-lg md:text-3xl lg:text-4xl">
+				<div className="mt-6 md:mt-8">
+					<h3 className="text-center font-semibold  mb-2 text-lg md:text-xl">
 						TASK COMPLETED: {counter}
 					</h3>
-					<h4 className="text-center  text-xs md:text-sm lg:text-base mb-4">
+					<h4 className="text-center  text-sm md:text-base mb-2">
 						Need
-						<span className="ml-1 mr-0.5">{untilBreak}</span> More Task
+						<span className="ml-2">{untilBreak}</span> More Task
 						{untilBreak > 1 ? 's' : ''} for a Long Break
 					</h4>
 					<button
 						disabled={counter < 1}
 						onClick={() => setCounter(0)}
-						className="outline-none active:bg-neutral-200 text-center mx-auto  block text-xs bg-neutral-100 py-2 px-4 rounded-full"
+						className="w-max px-4 mx-auto h-8 text-xs md:text-base md:h-9 flex justify-center items-center space-x-2  rounded-md transition-transform duration-100 border border-main-light-darker dark:border-main-dark-darker active:scale-90 bg-main-light-lighter text-black hover:bg-main-light-0   dark:bg-main-dark-lighter dark:text-white dark:hover:bg-main-dark-0 dark:hover:text-white capitalize"
 					>
 						Clear Progress
 					</button>
@@ -264,13 +266,23 @@ function Pomodoro({ visible, timerActive, setTimerActive }: Props) {
 
 				{/* Visiual Counter */}
 				{counter > 0 && (
-					<ul className="grid grid-cols-4 gap-3 mt-6 md:mt-8 lg:mt-10">
+					<ul
+						className={`${counter > 40 ? 'flex flex-wrap ' : 'grid'} ${
+							counter > 16 && counter <= 40
+								? 'grid-cols-8 max-w-[250px] md:max-w-[275px] lg:max-w-[300px]'
+								: ''
+						} ${
+							counter <= 16
+								? 'grid-cols-4 max-w-[100px] md:max-w-[125px] lg:max-w-[150px]'
+								: ''
+						} gap-3 mt-6 md:mt-8  mx-auto place-items-center `}
+					>
 						{Array(counter)
 							.fill(counter)
 							.map(() => (
 								<li
 									key={`Star-${Math.random()}`}
-									className="text-xl md:text-3xl text-neutral-300"
+									className="text-xl md:text-2xl lg:text-3xl text-main-dark-lighter dark:text-main-light-darker mx-auto"
 								>
 									<FiStar />
 								</li>
