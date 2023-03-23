@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       scale: {
-        80: '.8'
+        85: '.85'
       },
       fontFamily: {
         main: ['Plus Jakarta Sans', 'ui-sans-serif', 'system-ui'],
@@ -23,7 +23,7 @@ module.exports = {
         },
         main: {
           light: {
-            "lighter": "#fbfbfb",
+            "lighter": "#ffffff",
             0: "#fafafa",
             "darker": "#c8c8c8"
           },

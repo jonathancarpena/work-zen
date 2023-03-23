@@ -6,12 +6,12 @@ function Footer() {
 	const [open, setOpen] = useState(false);
 	const toggleDarkMode = useDarkModeUpdate();
 	return (
-		<footer className="h-16 w-full z-50 flex justify-end items-center px-3 border-t lg:border-none relative bg-inherit">
+		<footer className="h-16 w-full z-50 flex justify-end items-center px-3 border-t md:px-4 md:h-20 lg:border-none relative bg-inherit">
 			{/* Info */}
 			<div
 				className={`${
 					open ? '' : 'translate-x-[200%] opacity-0 '
-				} absolute bottom-full right-3 p-5 flex flex-col space-y-3 transition-all duration-500  bg-main-light-lighter border border-black text-[#000000]  dark:bg-main-dark-darker dark:text-white dark:border-white `}
+				} absolute bottom-full right-3 md:right-4 p-5 flex flex-col space-y-3 transition-all duration-500  bg-main-light-lighter border border-black text-[#000000]  dark:bg-main-dark-darker dark:text-white dark:border-white `}
 			>
 				<p className="">
 					Built by{' '}
@@ -48,7 +48,7 @@ function Footer() {
 					open
 						? 'bg-main-dark-0 text-white dark:bg-main-light-0 dark:text-black'
 						: 'bg-inherit text-inherit dark:text-white'
-				}  rounded-full active:scale-80 ml-auto transition-transform duration-150 ouline-none`}
+				}  rounded-full active:scale-85 ml-auto transition-transform duration-100 ouline-none`}
 			>
 				<FiHelpCircle className="w-11 h-11" />
 			</button>
