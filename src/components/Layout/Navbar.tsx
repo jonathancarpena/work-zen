@@ -15,7 +15,7 @@ function Navbar() {
 		{ value: 'calculator', icon: <FiHash /> },
 	];
 	return (
-		<nav className="max-w-screen-xl mx-auto px-3 h-[6vh]">
+		<nav className="h-14 z-40">
 			<ul className="flex items-center h-full space-x-3">
 				{NavItems.map((item) => (
 					<li key={`NavItem-${item.value}`}>
@@ -25,7 +25,7 @@ function Navbar() {
 								tab === item.value
 									? 'bg-black text-white'
 									: 'bg-white text-black'
-							} w-9 h-9 flex justify-center items-center  rounded-full  border text-xl active:scale-90`}
+							} w-11 h-11 flex justify-center items-center  rounded-2xl  border text-xl active:scale-90`}
 						>
 							{item.icon}
 						</button>

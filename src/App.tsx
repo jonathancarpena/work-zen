@@ -9,7 +9,7 @@ import Notes from './components/App/Notes';
 
 function App() {
 	const tab = useTab();
-	const [timerActive, settimerActive] = useState<boolean>(false);
+	const [timerActive, setTimerActive] = useState<boolean>(false);
 
 	return (
 		<Layout>
@@ -17,7 +17,7 @@ function App() {
 			<Pomodoro
 				visible={tab === 'pomodoro'}
 				timerActive={timerActive}
-				setTimerActive={settimerActive}
+				setTimerActive={setTimerActive}
 			/>
 			<Notes visible={tab === 'notes'} />
 

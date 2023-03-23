@@ -1,15 +1,17 @@
 import { useState } from 'react';
+import { useDarkModeUpdate } from '../../lib/context/DarkMode';
 import { FiHelpCircle } from 'react-icons/fi';
 
 function Footer() {
 	const [open, setOpen] = useState(false);
+	const toggleDarkMode = useDarkModeUpdate();
 	return (
-		<footer className="fixed p-3 justify-center items-end bottom-0 w-screen lg:w-max lg:right-0 bg-neutral-50 lg:bg-transparent   border-t lg:border-none z-50 flex h-[6vh] ">
+		<footer className="h-16 w-full z-50 flex justify-end items-center px-3 border-t lg:border-none relative bg-inherit">
 			{/* Info */}
 			<div
 				className={`${
-					open ? 'lg:shadow-md' : 'translate-x-[200%] opacity-0'
-				} absolute bottom-[56px] right-0 lg:right-2 border border-[#000000] p-5 flex flex-col space-y-3 rounded-tl-2xl lg:rounded-3xl bg-black text-white  tracking-tight transition-all duration-500 font-mono w-max `}
+					open ? '' : 'translate-x-[200%] opacity-0 '
+				} absolute bottom-full right-3 p-5 flex flex-col space-y-3 transition-all duration-500  bg-main-light-lighter border border-black text-[#000000]  dark:bg-main-dark-darker dark:text-white dark:border-white `}
 			>
 				<p className="">
 					Built by{' '}
@@ -34,20 +36,21 @@ function Footer() {
 
 				<div className=" flex">
 					<span>Dark Mode</span>
-					<button className="ml-auto">Click</button>
+					<button onClick={toggleDarkMode} className="ml-auto">
+						Click
+					</button>
 				</div>
 			</div>
 
-			{/* Footer Toggle */}
 			<button
 				onClick={() => setOpen(!open)}
 				className={`${
 					open
-						? 'bg-black text-white '
-						: 'text-black bg-neutral-50 hover:bg-neutral-200'
-				} text-4xl rounded-full active:scale-90 ml-auto w-9 h-9`}
+						? 'bg-main-dark-0 text-white dark:bg-main-light-0 dark:text-black'
+						: 'bg-inherit text-inherit dark:text-white'
+				}  rounded-full active:scale-80 ml-auto transition-transform duration-150 ouline-none`}
 			>
-				<FiHelpCircle />
+				<FiHelpCircle className="w-11 h-11" />
 			</button>
 		</footer>
 	);

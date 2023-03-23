@@ -8,13 +8,13 @@ interface Props {
 
 function Layout({ children }: Props) {
 	return (
-		<>
+		<div className="flex flex-col items-stretch  h-screen bg-main-light-0 dark:bg-main-dark-0 overflow-hidden font-mono">
 			<Navbar />
-			<main className="h-[88vh] max-h-[88vh] lg:h-[94vh] lg:max-h-[94vh] overflow-hidden max-w-screen-xl mx-auto px-3 relative bg-neutral-50">
+			<div className="flex-1 bg-main-0 dark:bg-main-dark overflow-y-scroll px-3">
 				{children}
-			</main>
+			</div>
 			<Footer />
-		</>
+		</div>
 	);
 }
 

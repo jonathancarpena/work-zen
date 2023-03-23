@@ -7,13 +7,32 @@ module.exports = {
   darkMode: "class",
   theme: {
     extend: {
-
+      scale: {
+        80: '.8'
+      },
       fontFamily: {
         main: ['Plus Jakarta Sans', 'ui-sans-serif', 'system-ui'],
 
       },
       colors: {
-        black: '#262626'
+        black: '#262626',
+        accent: {
+          lighter: "#515151",
+          "0": "#262626",
+          darker: "#1e1e1e"
+        },
+        main: {
+          light: {
+            "lighter": "#fbfbfb",
+            0: "#fafafa",
+            "darker": "#c8c8c8"
+          },
+          dark: {
+            "lighter": "#515151",
+            0: "#262626",
+            "darker": "#1e1e1e"
+          }
+        }
       }
 
     },

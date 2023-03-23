@@ -212,7 +212,7 @@ function Notes({ visible }: Props) {
 						name="body"
 						onChange={handleChange}
 						placeholder="Write Here..."
-						className="top-0 left-0 absolute outline-none bg-inherit w-full h-full"
+						className="top-0  left-0 absolute outline-none bg-inherit w-full h-full"
 					/>
 				</div>
 			</form>
