@@ -4,15 +4,15 @@ interface Props {
 	isVisible?: boolean;
 	children?: React.ReactNode;
 	sx?: string;
-	key: string;
+	uniqueKey: string;
 }
 
-function Section({ children, sx, isVisible, key }: Props) {
+function Section({ children, sx, isVisible, uniqueKey }: Props) {
 	return (
 		<AnimatePresence mode="popLayout">
 			{isVisible && (
 				<motion.section
-					key={key}
+					key={uniqueKey}
 					initial={{ opacity: 0, y: 50 }}
 					animate={{
 						opacity: 1,

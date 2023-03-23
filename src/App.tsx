@@ -1,30 +1,19 @@
 import { useState } from 'react';
+import { useTab } from './lib/context/Tab';
+
+// Components
+import Layout from './components/Layout';
 import Pomodoro from './components/App/Pomodoro';
 import Calculator from './components/App/Calculator';
 import Notes from './components/App/Notes';
 
-type Tab = 'pomodoro' | 'calculator' | 'notes';
-interface State {
-	tab: Tab;
-	timerActive: boolean;
-}
 function App() {
-	const [tab, setTab] = useState<State['tab']>('pomodoro');
-	const [timerActive, settimerActive] = useState<State['timerActive']>(false);
-	const TABS: Tab[] = ['pomodoro', 'notes', 'calculator'];
+	const tab = useTab();
+	const [timerActive, settimerActive] = useState<boolean>(false);
 
 	return (
-		<>
-			{/* Tab Options */}
-			<ul className="flex space-x-5 justify-center  fixed top-10">
-				{TABS.map((item) => (
-					<li key={item}>
-						<button onClick={() => setTab(item)}>{item}</button>
-					</li>
-				))}
-			</ul>
-
-			{/* Display */}
+		<Layout>
+			{/* Displays */}
 			<Pomodoro
 				visible={tab === 'pomodoro'}
 				timerActive={timerActive}
@@ -32,8 +21,8 @@ function App() {
 			/>
 			<Notes visible={tab === 'notes'} />
 
-			{tab === 'calculator' && <Calculator />}
-		</>
+			<Calculator visible={tab === 'calculator'} />
+		</Layout>
 	);
 }
 

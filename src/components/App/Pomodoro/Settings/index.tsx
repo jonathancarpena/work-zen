@@ -30,7 +30,7 @@ function Settings({ settings, setSettings, playAudio }: Props) {
 		<>
 			<Button
 				onClick={() => setOpen(!open)}
-				sx="fixed bottom-10 left-3 shadow-md md:shadow-none md:h-max md:left-auto md:w-max md:absolute md:right-5 md:top-6 lg:top-7  flex items-center text-3xl bg-white rounded-lg overflow-hidden text-black "
+				sx="absolute top-1/2 -translate-y-1/2  md:translate-y-0 md:h-max md:left-auto md:w-max md:absolute md:right-5 md:top-6 lg:top-7  flex items-center text-3xl bg-white rounded-lg overflow-hidden text-black "
 			>
 				<FiSettings />
 			</Button>
@@ -41,7 +41,7 @@ function Settings({ settings, setSettings, playAudio }: Props) {
 					open
 						? 'z-50 shadow-xl'
 						: '-z-10 translate-y-full text-transparent md:-translate-y-[120%] '
-				} flex  flex-col fixed w-full overflow-y-auto max-h-[95vh] left-1/2 -translate-x-1/2 bottom-0 bg-white transition-all duration-500 border rounded-t-3xl  md:rounded-t-none md:rounded-b-3xl md:top-0 md:max-w-lg md:bottom-auto`}
+				} flex  flex-col fixed w-full overflow-y-auto max-h-[95vh] left-1/2 -translate-x-1/2 bottom-[57px] bg-white transition-all duration-500 border rounded-t-3xl  md:rounded-t-none md:rounded-b-3xl md:top-0 md:max-w-lg md:bottom-auto`}
 			>
 				<h3 className="px-5 py-5 border-b font-bold text-lg mb-5">
 					Pomodoro Settings
@@ -69,6 +69,8 @@ function Settings({ settings, setSettings, playAudio }: Props) {
 								name="focus mode"
 								className="bg-neutral-100 p-2 rounded-sm focus:bg-white focus:outline-neutral-200 text-start"
 								min={1}
+								max={99}
+								step={0.5}
 								value={settings['focus mode']}
 								onChange={handleTimerSettingsChange}
 							/>
@@ -86,6 +88,8 @@ function Settings({ settings, setSettings, playAudio }: Props) {
 								type="number"
 								name="short break"
 								min={1}
+								step={0.5}
+								max={99}
 								className="bg-neutral-100 p-2 rounded-sm focus:bg-white focus:outline-neutral-200 text-start"
 								value={settings['short break']}
 								onChange={handleTimerSettingsChange}
@@ -103,7 +107,9 @@ function Settings({ settings, setSettings, playAudio }: Props) {
 								id="longBreak"
 								type="number"
 								name="long break"
+								step={0.5}
 								min={1}
+								max={99}
 								className="bg-neutral-100 p-2 rounded-sm focus:bg-white focus:outline-neutral-200 text-start"
 								value={settings['long break']}
 								onChange={handleTimerSettingsChange}
@@ -213,10 +219,10 @@ function Settings({ settings, setSettings, playAudio }: Props) {
 				<button
 					type="button"
 					onClick={() => setOpen(false)}
-					className="flex justify-center bg-neutral-50  active:bg-neutral-100"
+					className="flex justify-center md:bg-neutral-50  md:active:bg-neutral-100 absolute top-0 right-5 md:right-auto md:relative"
 				>
 					<span className="py-5  active:scale-90 w-full tracking-wide font-semibold">
-						Close
+						Close ✖
 					</span>
 				</button>
 			</form>

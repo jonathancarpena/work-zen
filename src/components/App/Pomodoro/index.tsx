@@ -180,7 +180,7 @@ function Pomodoro({ visible, timerActive, setTimerActive }: Props) {
 		<>
 			<Section
 				isVisible={visible}
-				key="pomodoro"
+				uniqueKey="pomodoro"
 				sx={`flex flex-col items-center font-main`}
 			>
 				<Container
@@ -211,7 +211,7 @@ function Pomodoro({ visible, timerActive, setTimerActive }: Props) {
 							{formatTime(timer[stage])}
 						</h1>
 
-						<div className="w-full  lg:relative">
+						<div className="w-full lg:relative">
 							{/* timerActive/Pause */}
 							<Button
 								onClick={handleStartTimer}
@@ -228,7 +228,7 @@ function Pomodoro({ visible, timerActive, setTimerActive }: Props) {
 									timerActive
 										? 'opacity-100'
 										: 'opacity-0 select-none cursor-default'
-								}  shadow-md bg-white text-black fixed bottom-10 right-3 rounded-lg overflow-hidden text-3xl transition-opacity duration-200 md:shadow-none md:text-4xl md:absolute md:bottom-1/2 md:translate-y-1/2 md:right-5   lg:bottom-0 lg:translate-y-0 lg:top-0 lg:-right-[70px]`}
+								} bg-white text-black rounded-lg overflow-hidden text-3xl transition-opacity duration-200 md:text-4xl absolute bottom-1/2 translate-y-1/2 right-5 lg:bottom-0 lg:translate-y-0 lg:top-0 lg:-right-[70px]`}
 							>
 								<FiSkipForward />
 							</Button>

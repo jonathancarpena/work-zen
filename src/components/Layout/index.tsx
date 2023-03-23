@@ -1,5 +1,6 @@
 import React from 'react';
 import Footer from './Footer';
+import Navbar from './Navbar';
 
 interface Props {
 	children?: React.ReactNode;
@@ -7,12 +8,13 @@ interface Props {
 
 function Layout({ children }: Props) {
 	return (
-		<div className="bg-neutral-50">
-			<main className="min-h-screen max-w-7xl mx-auto px-3 relative pt-20">
+		<>
+			<Navbar />
+			<main className="h-[88vh] max-h-[88vh] lg:h-[94vh] lg:max-h-[94vh] overflow-hidden max-w-screen-xl mx-auto px-3 relative bg-neutral-50">
 				{children}
 			</main>
 			<Footer />
-		</div>
+		</>
 	);
 }
 

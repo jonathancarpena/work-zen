@@ -13,3 +13,9 @@ export interface PomodoroSettings {
 export type TimerStages = 'focus mode' | 'short break' | 'long break';
 export type AlarmSounds = 'xylophone' | 'policeSiren';
 export type FocusSounds = 'brownNoise' | 'whiteNoise' | 'rain';
+export type TabOptions = 'pomodoro' | 'notes' | 'calculator';
+export interface Note {
+	id: string;
+	title: string;
+	body: string;
+}

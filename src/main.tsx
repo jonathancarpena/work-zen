@@ -2,12 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
-import Layout from './components/Layout';
+
+// Context Poviders
+import DarkModeProvider from './lib/context/DarkMode';
+import TabProvider from './lib/context/Tab';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<React.StrictMode>
-		<Layout>
-			<App />
-		</Layout>
+		<DarkModeProvider>
+			<TabProvider>
+				<App />
+			</TabProvider>
+		</DarkModeProvider>
 	</React.StrictMode>
 );
