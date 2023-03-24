@@ -216,7 +216,7 @@ function Pomodoro({ visible, timerActive, setTimerActive }: Props) {
 								timerActive
 									? 'translate-y-5 bg-main-dark-darker text-white dark:bg-main-light-lighter dark:text-black'
 									: 'active:translate-y-5 bg-main-dark-0 text-white dark:bg-main-light-0 dark:text-black'
-							} h-16 md:h-20 text-3xl md:text-4xl  flex justify-center items-center w-full rounded-xl   transition-transform ease-in duration-100 `}
+							} h-16 md:h-20 text-3xl md:text-4xl  flex justify-center items-center w-full rounded-xl transition-transform ease-in duration-75 `}
 						>
 							{!timerActive ? 'START' : 'PAUSE'}
 						</span>

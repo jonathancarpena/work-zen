@@ -39,33 +39,28 @@ function Settings({ settings, setSettings, playAudio }: Props) {
 				<span>Settings</span>
 			</button>
 
-			<div
-				className={`${
-					open ? 'opacity-30 z-40' : 'opacity-0 -z-10'
-				} w-screen h-screen inset-0 bg-pureBlack fixed -left-3 md:-left-4`}
-			/>
 			{/* Settings  */}
 			<form
 				className={`${
 					open
 						? 'z-50 shadow-xl'
 						: '-z-10 translate-y-full text-transparent lg:-translate-y-[120%] opacity-0'
-				} flex flex-col fixed w-full overflow-y-auto max-h-[95vh] -left-3 lg:left-1/2 lg:-translate-x-1/2 bottom-14 md:bottom-16 dark:bg-black bg-white transition-all duration-500 border dark:border-pureBlack rounded-t-xl  lg:rounded-t-none lg:rounded-b-3xl lg:top-0 lg:max-w-lg lg:bottom-auto`}
+				} flex flex-col fixed w-full overflow-y-auto h-screen lg:h-auto lg:max-h-[95vh] -left-3 lg:left-1/2 lg:-translate-x-1/2 bottom-0 dark:bg-black bg-white transition-all duration-500 border dark:border-pureBlack rounded-t-xl  lg:rounded-t-none lg:rounded-b-3xl lg:top-0 lg:max-w-lg lg:bottom-auto`}
 			>
-				<h3 className="px-5 py-5 border-b font-bold text-lg mb-5">
+				<h3 className="px-3 py-6 md:px-4 lg:p-5 border-b dark:border-pureBlack font-bold text-2xl mb-6 lg:mb-5">
 					Pomodoro Settings
 				</h3>
 				{/*  Timer Settings */}
-				<div className="px-5 border-b pb-7 flex flex-col space-y-5 mb-5">
+				<div className="px-3 md:px-4 lg:px-5 border-b dark:border-pureBlack pb-7 flex flex-col gap-y-6 mb-6 lg:gap-y-5 lg:mb-5">
 					<h4 className="font-semibold  text-neutral-500">
-						<FiClock className="inline mb-1 mr-1 text-lg" /> Timer
+						<FiClock className="inline mb-1 text-xl" /> Timer
 					</h4>
 
 					{/* Timer Stages */}
-					<div className="grid grid-cols-3 ">
+					<div className="grid grid-cols-3 gap-x-3 md:gap-x-4 lg:gap-x-5">
 						<h5 className="col-span-3 mb-2 font-semibold">Time (minutes)</h5>
 						{/* Focus Mode */}
-						<div className="flex flex-col mr-5 ">
+						<div className="flex flex-col  ">
 							<label
 								htmlFor="focusMode"
 								className="font-medium text-sm text-neutral-500"
@@ -85,7 +80,7 @@ function Settings({ settings, setSettings, playAudio }: Props) {
 							/>
 						</div>
 						{/* Short Break */}
-						<div className="flex flex-col mr-5">
+						<div className="flex flex-col  ">
 							<label
 								htmlFor="shortBreak"
 								className="font-medium text-sm text-neutral-500"
@@ -105,7 +100,7 @@ function Settings({ settings, setSettings, playAudio }: Props) {
 							/>
 						</div>
 						{/* Long Brea */}
-						<div className="flex flex-col">
+						<div className="flex flex-col  ">
 							<label
 								htmlFor="longBreak"
 								className="font-medium text-sm text-neutral-500"
@@ -145,11 +140,11 @@ function Settings({ settings, setSettings, playAudio }: Props) {
 				</div>
 
 				{/*  Audio Settings */}
-				<div className="px-5  border-b pb-7 flex flex-col space-y-5">
-					<h4 className="font-semibold mb-2 text-neutral-500">
-						<FiVolume2 className="inline mb-1 mr-1 text-lg" /> Audio
+				<div className="px-3 md:px-4 lg:px-5 mb-6 lg:mb-5">
+					<h4 className="font-semibold  text-neutral-500 mb-6 lg:mb-5">
+						<FiVolume2 className="inline mb-1 text-xl" /> Audio
 					</h4>
-					<div className="flex flex-col space-y-5 mb-5">
+					<div className="flex flex-col gap-y-6 lg:gap-y-5 ">
 						{/* Alarm Sound */}
 						<div className="flex justify-between ">
 							<label htmlFor="alarmSound" className="font-semibold">
@@ -228,9 +223,9 @@ function Settings({ settings, setSettings, playAudio }: Props) {
 				<button
 					type="button"
 					onClick={() => setOpen(false)}
-					className="flex justify-center md:bg-main-light-0  md:active:bg-main-light-darker md:dark:bg-main-dark-darker md:dark:active:bg-pureBlack absolute top-0 right-5 md:right-auto md:relative"
+					className="border-t dark:border-pureBlack flex justify-center bg-main-light-0  active:bg-main-light-darker dark:bg-main-dark-darker dark:active:bg-pureBlack mt-auto "
 				>
-					<span className="py-5  active:scale-90 w-full tracking-wide font-semibold">
+					<span className=" py-6  lg:py-5  active:scale-90 w-full tracking-wide font-semibold">
 						Close ✖
 					</span>
 				</button>
