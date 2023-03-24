@@ -16,13 +16,11 @@
 	box-sizing: border-box;
 }
 
+html,
 body {
-	min-height: 100vh;
-	min-height: -webkit-fill-available;
+	padding: 0;
+	margin: 0;
 	height: 100vh; /* fallback for Js load */
 	height: var(--doc-height);
-}
-html {
-	height: -webkit-fill-available;
 	background-color: #262626;
 }

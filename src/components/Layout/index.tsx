@@ -7,17 +7,12 @@ interface Props {
 }
 
 function Layout({ children }: Props) {
-	let timeoutId: any = null;
 	const documentHeight = () => {
-		clearTimeout(timeoutId); // avoid execution of previous timeouts
-		timeoutId = setTimeout(() => {
-			const doc = document.documentElement;
-			doc.style.setProperty('--doc-height', `${window.innerHeight}px`);
-		}, 200);
+		const doc = document.documentElement;
+		doc.style.setProperty('--doc-height', `${window.innerHeight}px`);
 	};
 	window.addEventListener('resize', documentHeight);
 	documentHeight();
-
 	return (
 		<div className="flex flex-col items-stretch h-screen  bg-main-light-0 dark:bg-main-dark-0 overflow-hidden font-mono">
 			<Navbar />
