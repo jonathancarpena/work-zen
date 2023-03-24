@@ -9,14 +9,15 @@
 *::after {
 	margin: 0;
 	padding: 0;
+	border: 0;
 	box-sizing: border-box;
 }
 
 html {
 	height: -webkit-fill-available;
-	background-color: #262626;
 }
 
 body {
 	height: -webkit-fill-available;
+	height: 100dvh;
 }

@@ -14,8 +14,10 @@ function DarkModeProvider({ children }: Props) {
 	function toggleDarkMode() {
 		if (isDark) {
 			document.documentElement.classList.add('dark');
+			document.body.style.backgroundColor = '#262626';
 		} else {
 			document.documentElement.classList.remove('dark');
+			document.body.style.backgroundColor = '#fafafa';
 		}
 		setIsDark((prevDarkMode) => !prevDarkMode);
 	}
