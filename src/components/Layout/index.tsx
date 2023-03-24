@@ -1,18 +1,14 @@
 import React from 'react';
 import Footer from './Footer';
 import Navbar from './Navbar';
+import useVH from '../../lib/hooks/useViewportHeight';
 
 interface Props {
 	children?: React.ReactNode;
 }
 
 function Layout({ children }: Props) {
-	const documentHeight = () => {
-		const doc = document.documentElement;
-		doc.style.setProperty('--doc-height', `${window.innerHeight}px`);
-	};
-	window.addEventListener('resize', documentHeight);
-	documentHeight();
+	useVH();
 	return (
 		<div className="flex flex-col items-stretch h-screen  bg-main-light-0 dark:bg-main-dark-0 overflow-hidden font-mono">
 			<Navbar />

@@ -3,10 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-	--doc-height: 100%;
-}
-
 /* Box sizing rules */
 *,
 *::before,
@@ -18,9 +14,9 @@
 
 html,
 body {
-	padding: 0;
-	margin: 0;
-	height: 100vh; /* fallback for Js load */
-	height: var(--doc-height);
 	background-color: #262626;
+}
+
+.app {
+	min-height: calc(var(--vh, 1vh) * 100);
 }
