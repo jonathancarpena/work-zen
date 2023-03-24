@@ -10,7 +10,10 @@ import Notes from './components/App/Notes';
 function App() {
 	const tab = useTab();
 	const [timerActive, setTimerActive] = useState<boolean>(false);
-
+	document.documentElement.style.setProperty(
+		'--vh',
+		window.innerHeight * 0.01 + 'px'
+	);
 	return (
 		<Layout>
 			{/* Displays */}
