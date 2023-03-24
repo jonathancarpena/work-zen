@@ -12,11 +12,15 @@
 	box-sizing: border-box;
 }
 
-html,
-body {
+html {
+	height: -webkit-fill-available
 	background-color: #262626;
 }
 
-.app {
-	min-height: calc(var(--vh, 1vh) * 100);
+
+body {
+	height: 100vh;
+	height: -webkit-fill-available	
 }
+
+
