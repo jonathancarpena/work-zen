@@ -13,14 +13,10 @@
 }
 
 html {
-	height: -webkit-fill-available
+	height: -webkit-fill-available;
 	background-color: #262626;
 }
 
-
 body {
-	height: 100vh;
-	height: -webkit-fill-available	
+	height: -webkit-fill-available;
 }
-
-
