@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
+import { FiZap } from 'react-icons/fi';
 
 // Components
 import Layout from './components/Layout';
@@ -6,25 +7,18 @@ import Main from './components/Main';
 
 function App() {
 	// Mobile Viewport Fix
-	useEffect(() => {
-		// only execute all the code below in client side
-		if (typeof window !== 'undefined') {
-			// Handler to call on window resize
-			const handleResize = () => {
-				let vh = window.innerHeight * 0.01;
-				document.documentElement.style.setProperty('--vh', `${vh}px`);
-			};
+	// useEffect(() => {
 
-			// Add event listener
-			window.addEventListener('resize', handleResize);
-
-			// Call handler right away so state gets updated with initial window size
-			handleResize();
-
-			// Remove event listener on cleanup
-			return () => window.removeEventListener('resize', handleResize);
-		}
-	});
+	// 	if (typeof window !== 'undefined') {
+	// 		const handleResize = () => {
+	// 			let vh = window.innerHeight * 0.01;
+	// 			document.documentElement.style.setProperty('--vh', `${vh}px`);
+	// 		};
+	// 		window.addEventListener('resize', handleResize);
+	// 		handleResize();
+	// 		return () => window.removeEventListener('resize', handleResize);
+	// 	}
+	// });
 	return (
 		<Layout>
 			<Main />
@@ -33,3 +27,7 @@ function App() {
 }
 
 export default App;
+
+// npx pwa-asset-generator public/light-logo.svg public -m public/site.webmanifest --padding "calc(50vh - 25%) calc(50vw - 25%)" -b "#FAFAFA" -q 100 -i public/asset-generator-changes.html --favicon
+
+// npx pwa-asset-generator public/dark-logo.svg public -m public/site.webmanifest --padding "calc(50vh - 25%) calc(50vw - 25%)" -b "#FAFAFA" -q 100 -i public/asset-generator-changes.html --favicon

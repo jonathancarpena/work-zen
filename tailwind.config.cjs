@@ -8,11 +8,9 @@ module.exports = {
   darkMode: "class",
   theme: {
     extend: {
-
       fontFamily: {
         main: ['Plus Jakarta Sans', 'ui-sans-serif', 'system-ui'],
       },
-
       colors: {
         pureBlack: "#000000",
         black: '#262626',
@@ -33,8 +31,10 @@ module.exports = {
             "darker": "#1e1e1e"
           }
         }
+      },
+      screens: {
+        standalone: { raw: "(display-mode: standalone)" }
       }
-
     },
   },
   plugins: [],
