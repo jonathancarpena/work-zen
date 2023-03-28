@@ -28,7 +28,7 @@ function Button({
 					? 'bg-main-dark-darker text-white dark:bg-main-light-lighter dark:text-black '
 					: `bg-inherit text-black  dark:text-white  ${
 							!disabled
-								? 'active:scale-90 hover:bg-white dark:hover:bg-main-dark-lighter'
+								? 'active:scale-90 lg:hover:bg-white lg:dark:hover:bg-main-dark-lighter'
 								: ''
 					  }  `
 			}  ${block ? 'w-full rounded-md' : 'w-max rounded-md px-4'} ${
@@ -62,7 +62,7 @@ export function IconButton({
 					? 'bg-main-dark-darker text-white dark:bg-main-light-lighter dark:text-black '
 					: `bg-inherit text-black  dark:text-white  ${
 							!disabled
-								? 'active:scale-90 hover:bg-white dark:hover:bg-main-dark-lighter'
+								? 'active:scale-90 lg:hover:bg-white lg:dark:hover:bg-main-dark-lighter'
 								: ''
 					  }`
 			}  ${block ? 'w-full' : 'w-11 md:w-14 '} ${
