@@ -4,6 +4,7 @@ import { useAppSelector, useAppDispatch } from '../../../../redux/hooks';
 
 // Components
 import { FiSettings, FiClock, FiVolume2 } from 'react-icons/fi';
+import Button from '../../../Button';
 import VolumeAdjuster from './VolumeAdjuster';
 import AudioPlayer from '../AudioPlayer';
 
@@ -59,17 +60,10 @@ function Settings() {
 	return (
 		<>
 			{/* Toggle */}
-			<button
-				onClick={() => setOpen(!open)}
-				className={`${
-					open
-						? ' border-main-dark-darker  dark:bg-main-light-lighter dark:text-black    bg-main-dark-0 hover:bg-main-dark-lighter text-white dark:hover:bg-main-dark-0  hover:text-white dark:border-main-light-darker'
-						: 'border-main-light-darker dark:border-main-dark-darker  bg-main-light-lighter text-black hover:bg-main-light-0   dark:bg-main-dark-lighter dark:text-white dark:hover:bg-main-dark-0 dark:hover:text-white'
-				} w-full h-11 md:text-lg md:h-14 flex justify-center items-center space-x-2 active:scale-90 rounded-md transition-transform duration-100 border  text-sm uppercase `}
-			>
+			<Button onClick={() => setOpen(!open)} active={open} sx="space-x-2">
 				<FiSettings className="text-base md:text-lg" />
 				<span>Settings</span>
-			</button>
+			</Button>
 
 			{/* Settings  */}
 			<form
@@ -77,7 +71,7 @@ function Settings() {
 					open
 						? 'z-50 shadow-xl'
 						: '-z-10 translate-y-full text-transparent lg:-translate-y-[120%] opacity-0'
-				} flex flex-col fixed w-full overflow-y-auto h-screen lg:h-auto lg:max-h-[95vh] -left-3 lg:left-1/2 lg:-translate-x-1/2 bottom-0 dark:bg-black bg-white transition-all duration-500 border dark:border-pureBlack rounded-t-xl  lg:rounded-t-none lg:rounded-b-3xl lg:top-0 lg:max-w-lg lg:bottom-auto`}
+				} flex flex-col fixed w-full overflow-y-auto h-screen lg:h-auto lg:max-h-[95vh] -left-3 lg:left-1/2 lg:-translate-x-1/2 bottom-0 dark:bg-black bg-white transition-all duration-500 border dark:border-pureBlack standalone:pt-8 lg:rounded-t-none lg:rounded-b-3xl lg:top-0 lg:max-w-lg lg:bottom-auto`}
 			>
 				<h3 className="px-3 py-6 md:px-4 lg:p-5 border-b dark:border-pureBlack font-bold text-2xl mb-6 lg:mb-5">
 					Focus Settings

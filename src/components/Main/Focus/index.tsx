@@ -14,6 +14,7 @@ import {
 } from '../../../redux/features/focusSlice';
 
 // Components
+import Button from '../../Button';
 import Settings from './Settings';
 import AudioPlayer from './AudioPlayer';
 import Section from '../../Layout/Section';
@@ -89,7 +90,13 @@ function Focus({ visible }: Props) {
 				'The timer is still running, are you sure you want to switch?'
 			);
 		}
-		dispatch(stageSelect(num));
+
+		if (confirm) {
+			dispatch(stageSelect(num));
+			dispatch(toggleTimer(false));
+			handleFocusAudio(false);
+			handleAlarmAudio(false);
+		}
 	}
 
 	function handleAlarmAudio(input: boolean) {
@@ -147,17 +154,14 @@ function Focus({ visible }: Props) {
 					{/* Stages */}
 					<div className="grid grid-cols-3 gap-3 w-full place-items-center md:gap-4 md:w-auto lg:w-full">
 						{TIMERSTAGES.map((item, index) => (
-							<button
+							<Button
+								active={stageIndex === index}
 								key={`tabs-${item}`}
 								onClick={() => handleStageChange(index)}
-								className={`${
-									stage === item
-										? 'bg-main-dark-darker text-white dark:bg-main-light-lighter dark:text-black'
-										: 'bg-main-light-lighter text-black dark:bg-main-dark-lighter dark:text-white'
-								} border border-main-light-darker dark:border-main-dark-darker text-sm active:scale-90 h-11 w-full rounded-lg uppercase transition-transform duration-100 md:text-lg md:h-14`}
+								sx="uppercase"
 							>
 								{item}
-							</button>
+							</Button>
 						))}
 					</div>
 
@@ -168,29 +172,24 @@ function Focus({ visible }: Props) {
 
 					{/* Start Button */}
 
-					<button
-						onClick={handleTimerButton}
-						className={`${
-							activeTimer
-								? ' bg-main-dark-darker text-white dark:bg-main-light-lighter dark:text-black'
-								: ' bg-main-dark-0 text-white dark:bg-main-light-0 dark:text-black'
-						} h-16 md:h-20 text-3xl md:text-4xl  flex justify-center items-center w-full rounded-xl transition-transform ease-in duration-75 `}
-					>
-						{!activeTimer ? 'START' : 'PAUSE'}
-					</button>
+					<Button active={true} onClick={handleTimerButton} size="lg">
+						<span className="text-3xl md:text-4xl">
+							{!activeTimer ? 'START' : 'PAUSE'}
+						</span>
+					</Button>
 
 					{/* Settings, Skip Button */}
 					<div className="mt-6 flex space-x-3 md:mt-8 md:space-x-4  justify-center ">
 						<Settings />
 
-						<button
+						<Button
 							disabled={!activeTimer}
 							onClick={handleNext}
-							className={`w-full h-11 text-sm md:text-lg md:h-14 flex justify-center items-center space-x-2  rounded-md transition-transform duration-100 border border-main-light-darker dark:border-main-dark-darker active:scale-90 bg-main-light-lighter text-black hover:bg-main-light-0   dark:bg-main-dark-lighter dark:text-white dark:hover:bg-main-dark-0 dark:hover:text-white uppercase `}
+							sx={'space-x-2'}
 						>
 							<FiSkipForward className="text-base md:text-lg" />
 							<span>Next</span>
-						</button>
+						</Button>
 					</div>
 				</div>
 
@@ -201,13 +200,15 @@ function Focus({ visible }: Props) {
 					</h3>
 					{generateMotivatingMessage()}
 
-					<button
+					<Button
 						disabled={counter < 1}
+						block={false}
 						onClick={handleResetCounter}
-						className="w-max px-4 mx-auto h-8 text-xs md:text-base md:h-9 flex justify-center items-center space-x-2  rounded-md transition-transform duration-100 border border-main-light-darker dark:border-main-dark-darker active:scale-90 bg-main-light-lighter text-black hover:bg-main-light-0   dark:bg-main-dark-lighter dark:text-white dark:hover:bg-main-dark-0 dark:hover:text-white capitalize"
+						size="sm"
+						sx="mx-auto"
 					>
-						Clear Progress
-					</button>
+						<span className="text-sm">Clear Progress</span>
+					</Button>
 				</div>
 
 				{/* Visiual Counter */}

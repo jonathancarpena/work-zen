@@ -3,6 +3,7 @@ import { useTab, useTabUpdate } from '../../lib/context/Tab';
 
 // Components
 import { FiCrosshair, FiHash, FiEdit2, FiClipboard } from 'react-icons/fi';
+import Button from '../Button';
 
 // Types
 import { TabOptions } from '../../lib/interfaces';
@@ -15,10 +16,10 @@ function Navbar() {
 	const tab = useTab();
 	const handleTabUpdate = useTabUpdate();
 	const NavItems: NavItems[] = [
-		{ value: 'focus', icon: <FiCrosshair /> },
-		{ value: 'notes', icon: <FiEdit2 /> },
-		{ value: 'tasks', icon: <FiClipboard /> },
-		{ value: 'calculator', icon: <FiHash /> },
+		{ value: 'focus', icon: <FiCrosshair className="text-xl md:text-2xl" /> },
+		{ value: 'notes', icon: <FiEdit2 className="text-xl md:text-2xl" /> },
+		{ value: 'tasks', icon: <FiClipboard className="text-xl md:text-2xl" /> },
+		{ value: 'calculator', icon: <FiHash className="text-xl md:text-2xl" /> },
 	];
 	return (
 		<>
@@ -27,16 +28,14 @@ function Navbar() {
 				<ul className="flex items-center h-full space-x-3 max-w-screen-2xl mx-auto ">
 					{NavItems.map((item) => (
 						<li key={`NavItem-${item.value}`}>
-							<button
+							<Button
+								icon
+								block={false}
+								active={tab === item.value}
 								onClick={() => handleTabUpdate(item.value)}
-								className={`${
-									tab === item.value
-										? 'bg-main-dark-darker text-white dark:bg-main-light-lighter dark:text-black'
-										: 'bg-inherit text-black  dark:text-white'
-								} w-11 h-11 md:w-14 md:h-14 flex justify-center items-center rounded-xl transition-transform duration-100 border border-pureBlack dark:border-white text-xl md:text-2xl active:scale-90`}
 							>
 								{item.icon}
-							</button>
+							</Button>
 						</li>
 					))}
 				</ul>
