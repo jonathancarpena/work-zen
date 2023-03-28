@@ -23,7 +23,7 @@ function Navbar() {
 	];
 	return (
 		<>
-			<nav className="h-16 w-full z-30 px-3 md:px-4 md:h-20   bg-inherit standalone:pt-8 standalone:pb-3">
+			<nav className=" w-full z-30 px-3 md:px-4 md:h-20 min-h-16 py-3 bg-inherit  standalone:pt-8">
 				<ul className="flex items-center h-full space-x-3 max-w-screen-2xl mx-auto ">
 					{NavItems.map((item) => (
 						<li key={`NavItem-${item.value}`}>
