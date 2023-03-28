@@ -13,7 +13,7 @@ export interface FocusSettings {
 export type TimerStages = 'focus mode' | 'short break' | 'long break';
 export type AlarmSounds = 'xylophone' | 'policeSiren';
 export type FocusSounds = 'brownNoise' | 'whiteNoise' | 'rain';
-export type TabOptions = 'focus' | 'notes' | 'calculator';
+export type TabOptions = 'focus' | 'notes' | 'calculator' | 'tasks';
 export type FocusSettingsKeys =
 	| TimerStages
 	| 'long break intervals'

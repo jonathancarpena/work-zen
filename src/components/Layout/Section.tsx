@@ -13,15 +13,14 @@ function Section({ children, sx, isVisible, uniqueKey }: Props) {
 			{isVisible && (
 				<motion.section
 					key={uniqueKey}
-					initial={{ opacity: 0, y: 50 }}
+					initial={{ opacity: 0 }}
 					animate={{
 						opacity: 1,
-						y: 0,
 						transition: {
-							delay: 0.3,
+							delay: 0,
 						},
 					}}
-					exit={{ opacity: 0, y: 50 }}
+					exit={{ opacity: 0 }}
 					className={`${sx} pt-1`}
 				>
 					{children}
