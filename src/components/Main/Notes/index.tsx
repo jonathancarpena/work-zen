@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import Section from '../../Layout/Section';
 import { FiLoader, FiTrash2 } from 'react-icons/fi';
 
+// Types
 import { Note } from '../../../lib/interfaces';
-
 interface Props {
 	visible: boolean;
 }

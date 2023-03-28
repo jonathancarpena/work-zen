@@ -1,3 +1,4 @@
+// Components
 import Section from '../../Layout/Section';
 
 interface Props {

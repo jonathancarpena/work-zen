@@ -6,11 +6,11 @@ interface Props {
 }
 
 // Context
-export const TabContext = createContext<TabOptions>('pomodoro');
+export const TabContext = createContext<TabOptions>('focus');
 export const TabUpdateContext = createContext((value: TabOptions) => {});
 
 function TabProvider({ children }: Props) {
-	const [tab, setTab] = useState<TabOptions>('pomodoro');
+	const [tab, setTab] = useState<TabOptions>('focus');
 
 	function updateTab(value: TabOptions) {
 		setTab(value);

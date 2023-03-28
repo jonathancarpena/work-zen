@@ -1,5 +1,10 @@
+// Context
 import { useTab, useTabUpdate } from '../../lib/context/Tab';
+
+// Components
 import { FiCrosshair, FiHash, FiEdit2 } from 'react-icons/fi';
+
+// Types
 import { TabOptions } from '../../lib/interfaces';
 
 interface NavItems {
@@ -10,7 +15,7 @@ function Navbar() {
 	const tab = useTab();
 	const handleTabUpdate = useTabUpdate();
 	const NavItems: NavItems[] = [
-		{ value: 'pomodoro', icon: <FiCrosshair /> },
+		{ value: 'focus', icon: <FiCrosshair /> },
 		{ value: 'notes', icon: <FiEdit2 /> },
 		{ value: 'calculator', icon: <FiHash /> },
 	];

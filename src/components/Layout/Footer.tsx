@@ -6,7 +6,7 @@ function Footer() {
 	const [open, setOpen] = useState(false);
 	const toggleDarkMode = useDarkModeUpdate();
 	return (
-		<footer className="h-14 w-full z-40 mt-auto flex justify-end items-center px-3 border-t dark:border-pureBlack md:px-4 md:h-16 lg:h-20  lg:bg-transparent lg:border-none relative bg-inherit lg:w-max lg:rounded-full lg:ml-auto">
+		<footer className="h-14 w-full z-40 mt-auto flex justify-end items-center px-3 border-t dark:border-pureBlack md:px-4 md:h-16 lg:h-20  lg:bg-transparent lg:border-none relative bg-inherit lg:fixed lg:bottom-0 lg:right-0 lg:w-max lg:rounded-full lg:ml-auto">
 			{/* Info */}
 			<div
 				className={`${

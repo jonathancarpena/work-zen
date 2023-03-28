@@ -1,32 +1,64 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { updateSettings } from '../../../../redux/features/focusSlice';
+import { useAppSelector, useAppDispatch } from '../../../../redux/hooks';
+
+// Components
 import { FiSettings, FiClock, FiVolume2 } from 'react-icons/fi';
 import VolumeAdjuster from './VolumeAdjuster';
-import { PomodoroSettings } from '../../../../lib/interfaces';
+import AudioPlayer from '../AudioPlayer';
 
-export interface Props {
-	settings: PomodoroSettings;
-	setSettings: React.Dispatch<React.SetStateAction<PomodoroSettings>>;
-	playAudio: (
-		type: 'alarm volume' | 'focus volume',
-		turnOn: boolean,
-		test: boolean
-	) => void;
-}
+// Types
+import { RootState } from '../../../../redux/store';
 
-function Settings({ settings, setSettings, playAudio }: Props) {
+function Settings() {
 	const [open, setOpen] = useState(false);
+	const [audioPlaying, setAudioPlaying] = useState('alarm volume');
+	const settingsAudioPlayer = useRef<any>();
+	const { settings } = useAppSelector((state: RootState) => state.focus);
+	const dispatch = useAppDispatch();
 
 	function handleTimerSettingsChange(
 		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
 	) {
-		setSettings({
-			...settings,
-			[e.currentTarget.name]: e.currentTarget.value,
-		});
+		const value = e.currentTarget.value;
+		const target = e.currentTarget.name;
+		dispatch(updateSettings({ target, value }));
+	}
+
+	function handleAudio(
+		target: 'alarm volume' | 'focus volume',
+		volume: number
+	) {
+		if (target === 'alarm volume') {
+			if (audioPlaying !== 'alarm volume') {
+				setAudioPlaying('alarm volume');
+			}
+		} else {
+			if (audioPlaying !== 'focus volume') {
+				setAudioPlaying('focus volume');
+			}
+		}
+
+		if (open) {
+			settingsAudioPlayer.current.volume = volume;
+			settingsAudioPlayer.current.play();
+
+			setTimeout(() => {
+				settingsAudioPlayer.current.pause();
+			}, 3000);
+		}
+	}
+
+	function generateAudioUrl() {
+		let basePath = '/assets/sounds';
+		return audioPlaying === 'alarm volume'
+			? `${basePath}/alarm/${settings['alarm sound']}.mp3`
+			: `${basePath}/focus/${settings['focus sound']}.mp3`;
 	}
 
 	return (
 		<>
+			{/* Toggle */}
 			<button
 				onClick={() => setOpen(!open)}
 				className={`${
@@ -48,7 +80,7 @@ function Settings({ settings, setSettings, playAudio }: Props) {
 				} flex flex-col fixed w-full overflow-y-auto h-screen lg:h-auto lg:max-h-[95vh] -left-3 lg:left-1/2 lg:-translate-x-1/2 bottom-0 dark:bg-black bg-white transition-all duration-500 border dark:border-pureBlack rounded-t-xl  lg:rounded-t-none lg:rounded-b-3xl lg:top-0 lg:max-w-lg lg:bottom-auto`}
 			>
 				<h3 className="px-3 py-6 md:px-4 lg:p-5 border-b dark:border-pureBlack font-bold text-2xl mb-6 lg:mb-5">
-					Pomodoro Settings
+					Focus Settings
 				</h3>
 				{/*  Timer Settings */}
 				<div className="px-3 md:px-4 lg:px-5 border-b dark:border-pureBlack pb-7 flex flex-col gap-y-6 mb-6 lg:gap-y-5 lg:mb-5">
@@ -165,11 +197,8 @@ function Settings({ settings, setSettings, playAudio }: Props) {
 						{/* Alarm Volume */}
 						<div className="self-end ">
 							<VolumeAdjuster
-								settings={settings}
-								setSettings={setSettings}
 								targetName="alarm volume"
-								playAudio={playAudio}
-								settingsOpen={open}
+								handleAudio={handleAudio}
 							/>
 						</div>
 
@@ -210,11 +239,8 @@ function Settings({ settings, setSettings, playAudio }: Props) {
 						{/* Focus Volume */}
 						<div className="self-end">
 							<VolumeAdjuster
-								settings={settings}
-								setSettings={setSettings}
 								targetName="focus volume"
-								playAudio={playAudio}
-								settingsOpen={open}
+								handleAudio={handleAudio}
 							/>
 						</div>
 					</div>
@@ -230,6 +256,8 @@ function Settings({ settings, setSettings, playAudio }: Props) {
 					</span>
 				</button>
 			</form>
+
+			<AudioPlayer url={generateAudioUrl()} ref={settingsAudioPlayer} />
 		</>
 	);
 }

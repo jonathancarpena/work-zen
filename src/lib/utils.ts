@@ -1,3 +1,4 @@
+import { TimerStages } from './interfaces';
 type StringNum = string | number;
 
 export function minutesToSeconds(minutes: number): number {
@@ -12,5 +13,15 @@ export function formatTime(time: number): string {
 		seconds = `0${seconds}`;
 	}
 
+	if (minutes < 10) {
+		minutes = `0${minutes}`;
+	}
+
 	return `${minutes}:${seconds}`;
 }
+
+export const TIMERSTAGES: TimerStages[] = [
+	'focus mode',
+	'short break',
+	'long break',
+];
