@@ -35,7 +35,6 @@ function Focus({ visible }: Props) {
 		stage: stageIndex,
 	} = useAppSelector((state: RootState) => state.focus);
 	const dispatch = useAppDispatch();
-	let stage = TIMERSTAGES[stageIndex];
 	let untilBreak =
 		settings['long break intervals'] -
 		(counter % settings['long break intervals']);
@@ -166,7 +165,7 @@ function Focus({ visible }: Props) {
 					</div>
 
 					{/* Timer */}
-					<h1 className="text-9xl md:text-[12rem] lg:text-[15rem] font-bold text-center my-8 text-inherit">
+					<h1 className="text-9xl md:text-[12rem] lg:text-[15rem] font-bold text-center my-8 text-inherit select-none">
 						{formatTime(timer)}
 					</h1>
 

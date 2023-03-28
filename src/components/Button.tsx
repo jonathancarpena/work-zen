@@ -37,7 +37,7 @@ function Button({
 				size === 'lg' ? 'h-16 md:h-20' : ''
 			}  
 			
-			flex justify-center items-center  transition-transform duration-100 border border-pureBlack dark:border-white text-sm md:text-lg ${sx}`}
+			flex justify-center items-center  transition-transform duration-100 border border-pureBlack dark:border-white text-sm md:text-lg select-none ${sx}`}
 		>
 			{children}
 		</button>
@@ -71,7 +71,7 @@ export function IconButton({
 				size === 'lg' ? 'h-16 md:h-20' : ''
 			}  
 		rounded-lg md:rounded-xl
-			flex justify-center items-center  transition-transform duration-100 border border-pureBlack dark:border-white text-xl md:text-2xl ${sx}`}
+			flex justify-center items-center  transition-transform duration-100 border border-pureBlack dark:border-white text-xl md:text-2xl select-none ${sx}`}
 		>
 			{children}
 		</button>
