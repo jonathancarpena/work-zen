@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { useDarkModeUpdate } from '../../lib/context/DarkMode';
-import { FiHelpCircle } from 'react-icons/fi';
+import { useDarkMode, useDarkModeUpdate } from '../../lib/context/DarkMode';
+import { FiHelpCircle, FiToggleLeft, FiToggleRight } from 'react-icons/fi';
 
 function Footer() {
 	const [open, setOpen] = useState(false);
 	const toggleDarkMode = useDarkModeUpdate();
+	const darkMode = useDarkMode();
 	return (
 		<footer className="h-14 z-40 flex justify-end items-center px-3  dark:border-pureBlack md:px-4 md:h-16 lg:h-20   fixed bottom-0 right-0 w-max rounded-full ml-auto">
 			{/* Info */}
@@ -35,9 +36,16 @@ function Footer() {
 				</p>
 
 				<div className=" flex">
-					<span>Dark Mode</span>
-					<button onClick={toggleDarkMode} className="ml-auto">
-						Click
+					<span>Dark Mode: {!darkMode ? 'On' : 'Off'}</span>
+					<button
+						onClick={toggleDarkMode}
+						className="ml-auto   text-white  dark:text-black rounded-lg"
+					>
+						{darkMode ? (
+							<FiToggleLeft className="h-11 w-11" />
+						) : (
+							<FiToggleRight className="h-11 w-11" />
+						)}
 					</button>
 				</div>
 			</div>

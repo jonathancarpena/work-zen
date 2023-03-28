@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext, createContext } from 'react';
+import { useState, useContext, createContext } from 'react';
 
 interface Props {
 	children?: JSX.Element | JSX.Element[] | React.ReactNode;
@@ -9,18 +9,15 @@ export const DarkModeContext = createContext(false);
 export const DarkModeUpdateContext = createContext(() => {});
 
 function DarkModeProvider({ children }: Props) {
-	const [isDark, setIsDark] = useState(false);
-
-	useEffect(() => {
-		const prefersDark = window.matchMedia(
+	const [isDark, setIsDark] = useState(() => {
+		const preferDark = window.matchMedia(
 			'(prefers-color-scheme: dark)'
 		).matches;
-
-		if (prefersDark) {
-			setIsDark(true);
+		if (preferDark) {
 			document.documentElement.classList.add('dark');
 			document.body.style.backgroundColor = '#262626';
 		}
+		return preferDark;
 	});
 
 	function toggleDarkMode() {

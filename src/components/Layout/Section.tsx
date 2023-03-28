@@ -9,7 +9,10 @@ function Section({ children, sx, isVisible, uniqueKey }: Props) {
 	return (
 		<>
 			{isVisible && (
-				<section key={uniqueKey} className={`${sx} pt-3`}>
+				<section
+					key={uniqueKey}
+					className={`${sx} text-black dark:text-white pt-3`}
+				>
 					{children}
 				</section>
 			)}
