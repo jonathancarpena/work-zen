@@ -20,8 +20,8 @@ function Navbar() {
 		{ value: 'calculator', icon: <FiHash /> },
 	];
 	return (
-		<nav className="h-16 w-full z-30 px-3 md:px-4 md:h-20 lg:border-none relative bg-inherit">
-			<ul className="flex items-center h-full space-x-3 max-w-screen-2xl mx-auto standalone:h-[6.75rem]">
+		<nav className="h-16 w-full z-30 px-3 md:px-4 md:h-20 lg:border-none relative bg-inherit standalone:h-[6.75rem]">
+			<ul className="flex items-center h-full space-x-3 max-w-screen-2xl mx-auto ">
 				{NavItems.map((item) => (
 					<li key={`NavItem-${item.value}`}>
 						<button

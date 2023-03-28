@@ -1,5 +1,4 @@
-// import { useEffect } from 'react';
-import { FiZap } from 'react-icons/fi';
+import { useEffect } from 'react';
 
 // Components
 import Layout from './components/Layout';
@@ -7,18 +6,17 @@ import Main from './components/Main';
 
 function App() {
 	// Mobile Viewport Fix
-	// useEffect(() => {
-
-	// 	if (typeof window !== 'undefined') {
-	// 		const handleResize = () => {
-	// 			let vh = window.innerHeight * 0.01;
-	// 			document.documentElement.style.setProperty('--vh', `${vh}px`);
-	// 		};
-	// 		window.addEventListener('resize', handleResize);
-	// 		handleResize();
-	// 		return () => window.removeEventListener('resize', handleResize);
-	// 	}
-	// });
+	useEffect(() => {
+		if (typeof window !== 'undefined') {
+			const handleResize = () => {
+				let vh = window.innerHeight * 0.01;
+				document.documentElement.style.setProperty('--vh', `${vh}px`);
+			};
+			window.addEventListener('resize', handleResize);
+			handleResize();
+			return () => window.removeEventListener('resize', handleResize);
+		}
+	});
 	return (
 		<Layout>
 			<Main />
