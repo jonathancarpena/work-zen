@@ -205,7 +205,7 @@ function Focus({ visible }: Props) {
 						block={false}
 						onClick={handleResetCounter}
 						size="sm"
-						sx="mx-auto"
+						sx="mx-auto mt-4"
 					>
 						<span className="text-sm">Clear Progress</span>
 					</Button>
