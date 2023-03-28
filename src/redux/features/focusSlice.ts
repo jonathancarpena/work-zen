@@ -26,7 +26,7 @@ const initialState: FocusState = {
 		'alarm volume': 0.5,
 		'alarm sound': 'xylophone',
 		'focus sound': 'whiteNoise',
-		'focus volume': 0.5,
+		'focus volume': 0,
 	},
 	counter: 0,
 	stage: 0,

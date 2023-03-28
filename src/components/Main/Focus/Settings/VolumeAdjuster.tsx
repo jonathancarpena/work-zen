@@ -1,7 +1,7 @@
-import { motion, useMotionValue, useMotionValueEvent } from 'framer-motion';
 import { useAppDispatch, useAppSelector } from '../../../../redux/hooks';
 import { updateSettings } from '../../../../redux/features/focusSlice';
 import { RootState } from '../../../../redux/store';
+import ReactSlider from 'react-slider';
 
 interface Props {
 	targetName: 'focus volume' | 'alarm volume';
@@ -14,24 +14,13 @@ interface Props {
 function VolumeAdjuster({ targetName, handleAudio }: Props) {
 	const { settings } = useAppSelector((state: RootState) => state.focus);
 	const dispatch = useAppDispatch();
-	const x = useMotionValue(0);
+	const defaultVal = settings[targetName] * 100;
 
-	useMotionValueEvent(x, 'change', (latest) => {
-		// 0 - Mute
-		// 1.0 - 100% Volume
-
-		let volume = (latest + 50) / 100;
-		if (volume < 0) {
-			volume = 0;
-		}
-
-		if (volume > 1) {
-			volume = 1;
-		}
-
+	function handleSlideChange(value: number) {
+		let volume = value / 100;
 		dispatch(updateSettings({ target: targetName, value: volume }));
 		handleAudio(targetName, volume);
-	});
+	}
 
 	return (
 		<div className="flex items-center space-x-5">
@@ -39,19 +28,23 @@ function VolumeAdjuster({ targetName, handleAudio }: Props) {
 				{Math.ceil(settings[targetName] * 100)}
 			</span>
 
-			{/* Slide */}
-			<div className=" w-[100px] bg-main-light-darker dark:bg-main-dark-darker h-4  rounded-full ">
-				{/* Thumb */}
-				<motion.div
-					style={{ x }}
-					drag="x"
-					dragConstraints={{
-						left: -50,
-						right: 50,
-					}}
-					dragElastic={0}
-					dragMomentum={false}
-					className={`cursor-grab active:cursor-grabbing bg-white dark:bg-main-dark-lighter dark:border-pureBlack border-2 shadow-sm w-auto aspect-square rounded-[100%] h-[150%] relative bottom-1 mx-auto`}
+			<div className="w-28 h-4 bg-main-light-darker dark:bg-main-dark-darker  rounded-full">
+				<ReactSlider
+					ariaLabelledby={`${targetName}-volumeAdjuster`}
+					defaultValue={defaultVal}
+					min={0}
+					max={100}
+					renderThumb={(props) => (
+						<div
+							data-testid={`slider-thumb`}
+							{...props}
+							className={`
+						 bg-white border select-none h-6 w-6  rounded-full 
+			  cursor-grab active:cursor-grabbing -top-1
+				`}
+						/>
+					)}
+					onChange={handleSlideChange}
 				/>
 			</div>
 		</div>

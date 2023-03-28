@@ -71,7 +71,7 @@ function Settings() {
 					open
 						? 'z-50 shadow-xl'
 						: '-z-10 translate-y-full text-transparent lg:-translate-y-[120%] opacity-0'
-				} flex flex-col fixed w-full overflow-y-auto h-screen lg:h-auto lg:max-h-[95vh] -left-3 lg:left-1/2 lg:-translate-x-1/2 bottom-0 dark:bg-black bg-white transition-all duration-500 border dark:border-pureBlack standalone:pt-8  lg:rounded-b-3xl lg:top-0 lg:max-w-lg lg:bottom-auto select-none`}
+				} flex flex-col fixed w-full overflow-y-auto h-screen lg:h-auto lg:max-h-[95vh] -left-3 lg:left-1/2 lg:-translate-x-1/2 bottom-0 dark:bg-black bg-white transition-all duration-500 md:border dark:border-pureBlack standalone:pt-8  lg:rounded-b-3xl lg:top-0 lg:max-w-lg lg:bottom-auto select-none`}
 			>
 				<h3 className="px-3 py-6 md:px-4 lg:p-5 border-b dark:border-pureBlack font-bold text-2xl mb-6 lg:mb-5">
 					Focus Settings

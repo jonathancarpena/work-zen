@@ -24,7 +24,7 @@ function Navbar() {
 	return (
 		<>
 			{/* Notch Div */}
-			<div className="hidden standalone:block w-full h-9 bg-gradient-to-b from-main-dark-lighter to-transparent dark:bg-inherit" />
+			<div className="hidden standalone:block w-full h-9 bg-gradient-to-b from-main-dark-lighter to-transparent dark:from-main-dark-0  " />
 			<nav className=" w-full z-30 px-3 md:px-4 md:h-20 min-h-16 py-3 bg-inherit standalone:pt-2">
 				<ul className="flex items-center h-full space-x-3 max-w-screen-2xl mx-auto ">
 					{NavItems.map((item) => (
