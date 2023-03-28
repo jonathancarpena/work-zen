@@ -22,7 +22,7 @@ function Navbar() {
 	];
 	return (
 		<>
-			<div className="w-full h-[20px] bg-gradient-to-b from-black to-transparent hidden standalone:block"></div>
+			{/* <div className="w-full h-[20px] bg-gradient-to-b from-black to-transparent hidden standalone:block"></div> */}
 			<nav className="h-16 w-full z-30 px-3 md:px-4 md:h-20   bg-inherit  ">
 				<ul className="flex items-center h-full space-x-3 max-w-screen-2xl mx-auto ">
 					{NavItems.map((item) => (
