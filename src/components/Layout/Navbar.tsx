@@ -1,5 +1,5 @@
 // Context
-import { useTab, useTabUpdate } from '../../lib/context/Tab';
+import { useTab, useTabUpdate } from '../../context/Tab';
 
 // Components
 import { FiCrosshair, FiHash, FiEdit2, FiClipboard } from 'react-icons/fi';

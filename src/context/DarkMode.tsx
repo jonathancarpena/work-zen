@@ -5,22 +5,26 @@ interface Props {
 }
 
 // Context
-export const DarkModeContext = createContext(true);
+export const DarkModeContext = createContext(false);
 export const DarkModeUpdateContext = createContext(() => {});
 
+/*
+ Media Preference Function
+() => {
+	const preferDark = window.matchMedia(
+		'(prefers-color-scheme: dark)'
+	).matches;
+	if (preferDark) {
+		document.documentElement.classList.add('dark');
+		document.body.style.backgroundColor = '#262626';
+		return true;
+	} else {
+		return false;
+	}
+}
+*/
 function DarkModeProvider({ children }: Props) {
-	const [isDark, setIsDark] = useState(() => {
-		const preferDark = window.matchMedia(
-			'(prefers-color-scheme: dark)'
-		).matches;
-		if (preferDark) {
-			document.documentElement.classList.add('dark');
-			document.body.style.backgroundColor = '#262626';
-			return true;
-		} else {
-			return false;
-		}
-	});
+	const [isDark, setIsDark] = useState(false);
 
 	function toggleDarkMode() {
 		if (isDark) {

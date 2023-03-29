@@ -47,16 +47,6 @@ function Focus({ visible }: Props) {
 				dispatch(decrementTimer());
 			}, 1000);
 		}
-
-		if (timer <= 0) {
-			let alarmRepeat = 15000 * settings['alarm repeat'];
-			handleFocusAudio(false);
-			handleAlarmAudio(true);
-			setTimeout(() => {
-				handleAlarmAudio(false);
-			}, alarmRepeat);
-			handleNext();
-		}
 		return () => clearInterval(interval);
 	}, [activeTimer, timer]);
 
@@ -66,10 +56,24 @@ function Focus({ visible }: Props) {
 		focusAudioPlayer.current.volume = settings['focus volume'];
 	}, [settings['alarm volume'], settings['focus volume']]);
 
+	// Trigger Alarm Audio
+	useEffect(() => {
+		if (timer <= 0) {
+			let alarmRepeat = 15000 * settings['alarm repeat'];
+			handleFocusAudio(false);
+			handleAlarmAudio(true);
+			setTimeout(() => {
+				handleAlarmAudio(false);
+			}, alarmRepeat);
+			handleNext();
+		}
+	}, [timer, stageIndex]);
+
 	function handleTimerButton() {
 		if (activeTimer) {
 			handleFocusAudio(false);
 		} else {
+			handleAlarmAudio(false);
 			if (stageIndex === 0) {
 				handleFocusAudio(true);
 			}

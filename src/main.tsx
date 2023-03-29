@@ -4,8 +4,8 @@ import App from './App';
 import './index.css';
 
 // Context Poviders
-import DarkModeProvider from './lib/context/DarkMode';
-import TabProvider from './lib/context/Tab';
+import DarkModeProvider from './context/DarkMode';
+import TabProvider from './context/Tab';
 import { Provider as ReduxProvider } from 'react-redux';
 import { store } from './redux/store';
 

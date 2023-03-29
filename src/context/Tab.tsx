@@ -1,16 +1,16 @@
 import { useState, useContext, createContext } from 'react';
-import { TabOptions } from '../interfaces';
+import { TabOptions } from '../lib/interfaces';
 
 interface Props {
 	children?: JSX.Element | JSX.Element[] | React.ReactNode;
 }
 
 // Context
-export const TabContext = createContext<TabOptions>('tasks');
+export const TabContext = createContext<TabOptions>('focus');
 export const TabUpdateContext = createContext((value: TabOptions) => {});
 
 function TabProvider({ children }: Props) {
-	const [tab, setTab] = useState<TabOptions>('tasks');
+	const [tab, setTab] = useState<TabOptions>('focus');
 
 	function updateTab(value: TabOptions) {
 		setTab(value);

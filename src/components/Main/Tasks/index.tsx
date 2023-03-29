@@ -1,16 +1,25 @@
 import { useState, useEffect, useRef } from 'react';
 import Section from '../../Layout/Section';
 import Checkbox from './Checkbox';
-import { Task } from '../../../lib/interfaces';
+import { Task, Subtask } from '../../../lib/interfaces';
 import SingleTask from './SingleTask';
 
 interface Props {
 	visible: boolean;
 }
 
+interface State {
+	tasks: {
+		[id: string]: {
+			completed: boolean;
+			content: string;
+		};
+	};
+}
+
 function Tasks({ visible }: Props) {
 	const [loading, setLoading] = useState(false);
-	const [tasks, setTasks] = useState<Task[] | null>(null);
+	const [tasks, setTasks] = useState<State['tasks'] | null>(null);
 	const [input, setInput] = useState('');
 
 	const storageKey = 'workzen-tasks';
@@ -25,8 +34,8 @@ function Tasks({ visible }: Props) {
 		if (prevNotes) {
 			prevNotes = JSON.parse(prevNotes);
 		} else {
-			localStorage.setItem(storageKey, JSON.stringify([]));
-			prevNotes = [];
+			localStorage.setItem(storageKey, JSON.stringify({}));
+			prevNotes = {};
 		}
 		setTasks(prevNotes);
 
@@ -35,42 +44,69 @@ function Tasks({ visible }: Props) {
 
 	function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault();
+		const id = Date.now().toString();
 		let newTask = {
-			id: Date.now().toString(),
 			completed: false,
 			content: input,
 		};
-		if (tasks && tasks.length > 0) {
-			console.log('NOT EMPTY');
-			setTasks([...tasks, newTask]);
-		} else {
-			console.log('FROM EMPTY');
-			setTasks([newTask]);
-		}
 
-		setInput('');
+		if (input) {
+			if (tasks && Object.keys(tasks).length > 0) {
+				setTasks({ ...tasks, [id]: newTask });
+			} else {
+				setTasks({ [id]: newTask });
+			}
+			setInput('');
+		}
 	}
 
-	function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+	function handleNewTaskInputChange(e: React.ChangeEvent<HTMLInputElement>) {
 		setInput(e.target.value);
 	}
 
-	function handleKeyCapture(e: React.KeyboardEvent<HTMLInputElement>) {}
+	function handleEditTaskChange(e: React.ChangeEvent<HTMLInputElement>) {
+		const taskId = e.currentTarget.name;
+		if (tasks) {
+			let oldTask = tasks[taskId];
+			setTasks({
+				...tasks,
+				[taskId]: {
+					...oldTask,
+					content: e.target.value,
+				},
+			});
+		}
+	}
+
+	function handleToggleTask(id: string) {
+		if (tasks) {
+			let oldTask = tasks[id];
+			setTasks({
+				...tasks,
+				[id]: {
+					...oldTask,
+					completed: !tasks[id].completed,
+				},
+			});
+		}
+	}
 
 	return (
 		<Section
 			isVisible={visible}
 			uniqueKey="tasks"
-			sx="max-w-screen-2xl mx-auto flex flex-col gap-y-3"
+			sx="max-w-screen-2xl mx-auto flex flex-col gap-y-3 text-base md:text-lg"
 		>
-			{tasks && tasks.length > 0 && (
+			{tasks && Object.keys(tasks).length > 0 && (
 				<ul className="flex flex-col gap-y-3">
-					{tasks.map((item) => (
+					{Object.entries(tasks).map(([id, task]) => (
 						<SingleTask
-							key={item.id}
-							id={item.id}
-							content={item.content}
-							completed={true}
+							key={id}
+							id={id}
+							content={task.content}
+							completed={task.completed}
+							handleInputChange={handleEditTaskChange}
+							handleToggleTask={handleToggleTask}
 						/>
 					))}
 				</ul>
@@ -81,8 +117,8 @@ function Tasks({ visible }: Props) {
 				<Checkbox checked={false} />
 				<input
 					value={input}
-					onChange={handleInputChange}
-					className="bg-inherit outline-none text-lg"
+					onChange={handleNewTaskInputChange}
+					className="bg-inherit outline-none "
 					placeholder="To-do"
 				/>
 				<button type="submit" className="hidden">

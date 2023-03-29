@@ -29,11 +29,21 @@ export interface Note {
 	body: string;
 }
 
-export interface Task extends Subtask {
-	subtask?: Subtask[];
+export interface Task {
+	[id: string]: {
+		completed: boolean;
+		content: string;
+		subtask?: {
+			[id: string]: {
+				completed: boolean;
+				content: string;
+			};
+		};
+	};
 }
 export interface Subtask {
-	id: string;
-	completed: boolean;
-	content: string;
+	[id: string]: {
+		completed: boolean;
+		content: string;
+	};
 }

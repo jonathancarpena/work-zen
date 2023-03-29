@@ -1,4 +1,4 @@
-import { useTab } from '../../lib/context/Tab';
+import { useTab } from '../../context/Tab';
 import Focus from './Focus';
 import Calculator from './Calculator';
 // import Notes from './Notes';

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDarkMode, useDarkModeUpdate } from '../../lib/context/DarkMode';
+import { useDarkMode, useDarkModeUpdate } from '../../context/DarkMode';
 import { FiHelpCircle, FiToggleLeft, FiToggleRight } from 'react-icons/fi';
 
 function Footer() {
