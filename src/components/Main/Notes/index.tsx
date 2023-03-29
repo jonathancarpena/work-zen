@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 // Components
+import Button from '../../Button';
 import Section from '../../Layout/Section';
 import { FiLoader, FiTrash2 } from 'react-icons/fi';
 
@@ -19,7 +20,7 @@ function Notes({ visible }: Props) {
 		body: '',
 	});
 	const [edit, setEdit] = useState(false);
-	const storageKey = 'i-am-productive-notes';
+	const storageKey = 'workzen-notes';
 
 	// On Mount
 	useEffect(() => {
@@ -29,19 +30,19 @@ function Notes({ visible }: Props) {
 	});
 
 	// Warn Before Leaving
-	useEffect(() => {
-		const alertUser = (e: BeforeUnloadEvent) => {
-			if (note.body.length > 0 || note.title.length > 0) {
-				e.preventDefault();
-				e.returnValue = '';
-			}
-		};
+	// useEffect(() => {
+	// 	const alertUser = (e: BeforeUnloadEvent) => {
+	// 		if (note.body.length > 0 || note.title.length > 0) {
+	// 			e.preventDefault();
+	// 			e.returnValue = '';
+	// 		}
+	// 	};
 
-		window.addEventListener('beforeunload', alertUser);
-		return () => {
-			window.removeEventListener('beforeunload', alertUser);
-		};
-	}, [note]);
+	// 	window.addEventListener('beforeunload', alertUser);
+	// 	return () => {
+	// 		window.removeEventListener('beforeunload', alertUser);
+	// 	};
+	// }, [note]);
 	function handleChange(
 		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 	) {
@@ -130,21 +131,31 @@ function Notes({ visible }: Props) {
 		}
 	}
 
+	function handleMouseCapture(
+		e: React.MouseEvent<HTMLTextAreaElement, MouseEvent>
+	) {
+		let selected = window.getSelection()?.toString();
+		console.log(selected);
+	}
+
 	return (
 		<Section
 			isVisible={visible}
 			uniqueKey="notes"
-			sx="relative flex space-x-3 w-full h-full font-mono bg-inherit"
+			sx="relative flex space-x-3 w-full h-full  bg-inherit max-w-screen-xl mx-auto"
 		>
 			{/* Directory */}
 			<div className="max-w-xs w-full ">
-				<button
+				<Button
+					active={true}
 					type="submit"
-					onClick={handleAddNote}
-					className=" text-center text-lg px-5 bg-neutral-100 border rounded-full mb-4"
+					size="sm"
+					block={false}
+					onSubmitClick={handleAddNote}
+					sx="mb-4"
 				>
 					Save Note
-				</button>
+				</Button>
 				{loading ? (
 					<FiLoader className="text-xl animate-spin mt-3" />
 				) : (
@@ -166,19 +177,20 @@ function Notes({ visible }: Props) {
 			</div>
 
 			{/* Form */}
-			<form className="px-3 max-w-2xl w-full justify-self-center overflow-y-auto overflow-x-hidden max-h-full pr-2 bg-inherit flex flex-col pb-1">
-				<div className="sticky top-0 pb-4 bg-inherit z-40">
+			<form className="max-w-2xl w-full justify-self-center  items-stretch overflow-hidden flex flex-col pb-3 ">
+				{/* Title and Config */}
+				<div className="sticky top-0 pb-4 z-40">
 					{/* Title  */}
 					<div className="relative mb-4 bg-inherit">
-						<h1 className="text-3xl font-bold  bg-inherit w-full">
+						{/* <h1 className="text-3xl font-bold  bg-inherit w-full">
 							{note.title.length > 0 ? note.title : 'Title'}
-						</h1>
+						</h1> */}
 						<input
 							value={note['title']}
 							name="title"
 							onChange={handleChange}
 							placeholder="Title"
-							className="top-0 absolute  text-3xl font-bold outline-none bg-inherit w-full"
+							className=" text-3xl font-bold outline-none bg-inherit w-full"
 						/>
 					</div>
 
@@ -206,13 +218,14 @@ function Notes({ visible }: Props) {
 				</div>
 
 				{/* Body */}
-				<div className="relative flex-1 ">
+				<div className="relative flex-1  ">
 					<textarea
 						value={note['body']}
 						name="body"
 						onChange={handleChange}
 						placeholder="Write Here..."
-						className="top-0  left-0 absolute outline-none bg-inherit w-full h-full"
+						className=" outline-none bg-inherit w-full h-full"
+						onMouseUpCapture={handleMouseCapture}
 					/>
 				</div>
 			</form>

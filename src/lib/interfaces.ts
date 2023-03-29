@@ -28,3 +28,12 @@ export interface Note {
 	title: string;
 	body: string;
 }
+
+export interface Task extends Subtask {
+	subtask?: Subtask[];
+}
+export interface Subtask {
+	id: string;
+	completed: boolean;
+	content: string;
+}

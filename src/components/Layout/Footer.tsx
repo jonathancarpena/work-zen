@@ -35,16 +35,16 @@ function Footer() {
 					</a>
 				</p>
 
-				<div className=" flex">
+				<div className=" flex items-start">
 					<span>Dark Mode: {!darkMode ? 'On' : 'Off'}</span>
 					<button
 						onClick={toggleDarkMode}
-						className="ml-auto   text-white  dark:text-black rounded-lg"
+						className="ml-auto   text-white  dark:text-black -mt-1"
 					>
 						{darkMode ? (
-							<FiToggleLeft className="h-11 w-11" />
+							<FiToggleLeft className="w-11 h-auto " />
 						) : (
-							<FiToggleRight className="h-11 w-11" />
+							<FiToggleRight className="w-11  h-auto" />
 						)}
 					</button>
 				</div>

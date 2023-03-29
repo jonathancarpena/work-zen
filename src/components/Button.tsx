@@ -8,9 +8,12 @@ interface Props {
 	active?: boolean;
 	size?: 'sm' | 'md' | 'lg';
 	sx?: string;
+	type?: 'button' | 'reset' | 'submit';
+	onSubmitClick?: (e: React.FormEvent) => void;
 }
 
 function Button({
+	type = 'button',
 	children,
 	onClick,
 	active,
@@ -21,6 +24,7 @@ function Button({
 }: Props) {
 	return (
 		<button
+			type={type}
 			disabled={disabled}
 			onClick={onClick}
 			className={`${

@@ -5,7 +5,7 @@ interface Props {
 }
 
 // Context
-export const DarkModeContext = createContext(false);
+export const DarkModeContext = createContext(true);
 export const DarkModeUpdateContext = createContext(() => {});
 
 function DarkModeProvider({ children }: Props) {
@@ -16,8 +16,10 @@ function DarkModeProvider({ children }: Props) {
 		if (preferDark) {
 			document.documentElement.classList.add('dark');
 			document.body.style.backgroundColor = '#262626';
+			return true;
+		} else {
+			return false;
 		}
-		return preferDark;
 	});
 
 	function toggleDarkMode() {

@@ -17,7 +17,7 @@ function Navbar() {
 	const handleTabUpdate = useTabUpdate();
 	const NavItems: NavItems[] = [
 		{ value: 'focus', icon: <FiCrosshair /> },
-		{ value: 'notes', icon: <FiEdit2 /> },
+		// { value: 'notes', icon: <FiEdit2 /> },
 		{ value: 'tasks', icon: <FiClipboard /> },
 		{ value: 'calculator', icon: <FiHash /> },
 	];
