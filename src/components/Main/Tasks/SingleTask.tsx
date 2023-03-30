@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Subtask } from '../../../lib/interfaces';
+import useMobileScreen from '../../../hooks/useMobileScreen';
 // Components
 import Checkbox from './Checkbox';
 import TaskForm from './TaskForm';
@@ -35,18 +36,18 @@ function SingleTask({
 	toggleSubtask,
 	deleteSubtask,
 }: Props) {
-	const [hover, setHover] = useState(false);
 	const [subtaskForm, setSubtaskForm] = useState<number[]>([]);
-
-	const handleMouseEnter = () => setHover(true);
-	const handleMouseLeave = () => setHover(false);
+	const isMobile = useMobileScreen();
 
 	const handleCheckboxClick = () => toggleTask(id);
 	const handleDeleteButton = () => deleteTask(id);
 	const handleAddSubtaskButton = () =>
 		setSubtaskForm((prevState) => [prevState.length, ...prevState]);
-
-	function handleSubmiTaskForm(id: string, content: string, parent?: string) {
+	const handleSubmiTaskForm = (
+		id: string,
+		content: string,
+		parent?: string
+	) => {
 		if (parent) {
 			addSubtask(id, content, parent);
 			let oldSubTaskForm = subtaskForm;
@@ -57,21 +58,36 @@ function SingleTask({
 				setSubtaskForm([]);
 			}
 		}
-	}
+	};
+
+	// const handleBlur = (e: React.FocusEvent<HTMLTextAreaElement, Element>) => {
+	// }
+
+	// Max 33 on Small Screens
+	// Max 50 on Med-Large Screens
+
 	function generateTextAreaRows() {
 		let rows: number = 1;
-		if (content.length > 21) rows = 2;
-		if (content.length > 42) rows = 3;
+		if (isMobile) {
+			if (content.length > 50) {
+				rows = 3;
+			} else if (content.length > 34) {
+				rows = 2;
+			}
+		} else {
+			if (content.length > 50) {
+				rows = 2;
+			} else {
+				rows = 1;
+			}
+		}
 		return rows;
 	}
 
 	return (
-		<li className="flex flex-col gap-y-3">
-			<div
-				onMouseEnter={handleMouseEnter}
-				onMouseLeave={handleMouseLeave}
-				className="flex items-start gap-3"
-			>
+		<li className="flex flex-col w-full">
+			{/* Task Content */}
+			<div className="flex items-start space-x-3 mb-3">
 				<Checkbox
 					onClick={handleCheckboxClick}
 					checked={completed}
@@ -80,34 +96,34 @@ function SingleTask({
 				<textarea
 					className={`${
 						completed ? 'line-through opacity-50' : ''
-					} bg-inherit outline-none resize-none`}
+					} bg-inherit outline-none resize-none flex-1`}
 					name={id}
 					defaultValue={content}
+					maxLength={102}
 					rows={generateTextAreaRows()}
 					onKeyDown={editTask}
+					// onBlur={handleBlur}
 				/>
 
-				<button
-					onClick={handleAddSubtaskButton}
-					className={`${
-						hover ? '' : 'lg:opacity-0'
-					} transition-opacity duration-100 w-8 h-8`}
-				>
-					<FiCornerDownRight />
-				</button>
+				<div className="flex items-start space-x-3">
+					<button
+						onClick={handleAddSubtaskButton}
+						className={`w-9 h-9 rounded active:bg-neutral-300 `}
+					>
+						<FiCornerDownRight className="w-6 h-6 mx-auto" />
+					</button>
 
-				<button
-					onClick={handleDeleteButton}
-					className={`${
-						hover ? '' : 'lg:opacity-0'
-					} transition-opacity duration-100 w-8 h-8`}
-				>
-					<FiTrash />
-				</button>
+					<button
+						onClick={handleDeleteButton}
+						className={`w-9 h-9 rounded active:bg-neutral-300`}
+					>
+						<FiTrash className="w-6 h-6 mx-auto" />
+					</button>
+				</div>
 			</div>
 
 			{subtasks && Object.entries(subtasks).length > 0 && (
-				<ul className="flex flex-col gap-y-3 ml-9">
+				<ul className="flex flex-col ml-9">
 					{Object.entries(subtasks).map(([childID, task]) => (
 						<SubtaskItem
 							key={childID}
@@ -159,10 +175,7 @@ function SubtaskItem({
 	toggleTask,
 	deleteTask,
 }: SubTaskItemProps) {
-	const [hover, setHover] = useState(false);
-	const handleMouseEnter = () => setHover(true);
-	const handleMouseLeave = () => setHover(false);
-
+	const isMobile = useMobileScreen();
 	const handleCheckboxClick = () => toggleTask(id, parent);
 	const handleDeleteButton = () => deleteTask(id, parent);
 	const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -174,18 +187,27 @@ function SubtaskItem({
 
 	function generateTextAreaRows() {
 		let rows: number = 1;
-		if (content.length > 21) rows = 2;
-		if (content.length > 42) rows = 3;
+
+		if (isMobile) {
+			if (content.length > 50) {
+				rows = 3;
+			} else if (content.length > 34) {
+				rows = 2;
+			}
+		} else {
+			if (content.length > 50) {
+				rows = 2;
+			} else {
+				rows = 1;
+			}
+		}
+
 		return rows;
 	}
 
 	return (
-		<li className="flex flex-col gap-y-3">
-			<div
-				onMouseEnter={handleMouseEnter}
-				onMouseLeave={handleMouseLeave}
-				className="flex items-start gap-3"
-			>
+		<li className="flex flex-col w-3/5 mb-3">
+			<div className="flex items-start gap-3">
 				<Checkbox
 					onClick={handleCheckboxClick}
 					checked={completed}
@@ -194,8 +216,9 @@ function SubtaskItem({
 				<textarea
 					className={`${
 						completed ? 'line-through opacity-50' : ''
-					} bg-inherit outline-none resize-none`}
+					} bg-inherit outline-none resize-none flex-1`}
 					name={id}
+					maxLength={65}
 					defaultValue={content}
 					rows={generateTextAreaRows()}
 					onKeyDown={handleKeyDown}
@@ -203,11 +226,9 @@ function SubtaskItem({
 
 				<button
 					onClick={handleDeleteButton}
-					className={`${
-						hover ? '' : 'lg:opacity-0'
-					} transition-opacity duration-100 w-8 h-8`}
+					className={`w-9 h-9 rounded active:bg-neutral-300`}
 				>
-					<FiTrash />
+					<FiTrash className="w-6 h-6 mx-auto" />
 				</button>
 			</div>
 		</li>

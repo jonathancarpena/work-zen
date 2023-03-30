@@ -27,14 +27,15 @@ function DarkModeProvider({ children }: Props) {
 	const [isDark, setIsDark] = useState(false);
 
 	function toggleDarkMode() {
-		if (isDark) {
+		let newDarkMode = !isDark;
+		if (newDarkMode) {
 			document.documentElement.classList.add('dark');
 			document.body.style.backgroundColor = '#262626';
 		} else {
 			document.documentElement.classList.remove('dark');
 			document.body.style.backgroundColor = '#fafafa';
 		}
-		setIsDark((prevDarkMode) => !prevDarkMode);
+		setIsDark(newDarkMode);
 	}
 
 	return (

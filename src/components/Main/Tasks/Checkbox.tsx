@@ -17,7 +17,7 @@ function Checkbox({ disabled, checked = false, onClick, name = '' }: Props) {
 			role="checkbox"
 			className={`${
 				checked ? 'bg-black dark:bg-main-light-0 ' : ''
-			} w-6 h-6 rounded-sm border-2 border-pureBlack dark:border-white  justify-center items-center text-white dark:text-pureBlack text-2xl inline-flex ${
+			} w-6 h-6 rounded-sm border-2 border-pureBlack dark:border-white  justify-center items-center text-white dark:text-pureBlack text-2xl inline-flex mt-1 ${
 				disabled ? 'cursor-default' : ''
 			}`}
 		>

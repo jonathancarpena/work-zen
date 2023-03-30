@@ -13,18 +13,19 @@ interface State {
 }
 
 function Tasks({ visible }: Props) {
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
 	const [tasks, setTasks] = useState<State['tasks'] | null>(null);
-
 	const storageKey = 'workzen-tasks';
 
 	useEffect(() => {
 		if (tasks === null) {
-			getTasks();
+			getTasksFromLocalStorage();
+		} else {
+			postTasksToLocalStorage();
 		}
-	});
+	}, [tasks]);
 
-	function getTasks() {
+	const getTasksFromLocalStorage = () => {
 		setLoading(true);
 		let prevNotes: any = localStorage.getItem(storageKey);
 		if (prevNotes) {
@@ -36,14 +37,21 @@ function Tasks({ visible }: Props) {
 		setTasks(prevNotes);
 
 		setLoading(false);
-	}
+	};
 
-	function addTask(id: string, content: string) {
+	const postTasksToLocalStorage = () => {
+		setLoading(true);
+		if (localStorage.getItem(storageKey)) {
+			localStorage.setItem(storageKey, JSON.stringify(tasks));
+		}
+		setLoading(false);
+	};
+
+	const addTask = (id: string, content: string) => {
 		let newTask = {
 			id,
 			content,
 			completed: false,
-			subtasks: {},
 		};
 
 		if (tasks && Object.keys(tasks).length > 0) {
@@ -51,9 +59,9 @@ function Tasks({ visible }: Props) {
 		} else {
 			setTasks({ [id]: newTask });
 		}
-	}
+	};
 
-	function editTask(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+	const editTask = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
 		const taskId = e.currentTarget.name;
 		const newContent = e.currentTarget.value;
 
@@ -71,19 +79,21 @@ function Tasks({ visible }: Props) {
 				},
 			});
 		} else {
-			deleteTask(taskId);
+			if (e.key === 'Delete' || e.key === 'Backspace') {
+				deleteTask(taskId);
+			}
 		}
-	}
+	};
 
-	function deleteTask(id: string) {
+	const deleteTask = (id: string) => {
 		if (tasks) {
 			let oldListOfTasks = tasks;
 			delete oldListOfTasks[id];
 			setTasks({ ...oldListOfTasks });
 		}
-	}
+	};
 
-	function toggleTask(id: string) {
+	const toggleTask = (id: string) => {
 		if (tasks) {
 			let oldTask = tasks[id];
 			setTasks({
@@ -94,9 +104,9 @@ function Tasks({ visible }: Props) {
 				},
 			});
 		}
-	}
+	};
 
-	function addSubtask(id: string, content: string, parent?: string) {
+	const addSubtask = (id: string, content: string, parent?: string) => {
 		if (tasks && Object.keys(tasks).length > 0 && parent) {
 			const newTask = { content, completed: false };
 			let parentTask = tasks[parent];
@@ -107,37 +117,77 @@ function Tasks({ visible }: Props) {
 
 			setTasks({ ...tasks, [parent]: parentTask });
 		}
-	}
+	};
 
-	function editSubtask(
+	const editSubtask = (
 		e: React.KeyboardEvent<HTMLTextAreaElement>,
 		parent: string
-	) {
-		e.preventDefault();
-		console.log('EDITING SUB');
-	}
-
-	function toggleSubtask(id: string, parent: string) {
+	) => {
+		const id = e.currentTarget.name;
+		const newContent = e.currentTarget.value;
+		if (e.key === 'Enter') {
+			e.preventDefault();
+		}
 		let oldListOfTasks = { ...tasks };
 		let parentTask = oldListOfTasks[parent];
 
 		if (parentTask['subtasks']) {
-			let copyOfParentSubtasks = parentTask['subtasks'];
-			console.log(oldListOfTasks[parent]);
-			// oldListOfTasks[parent] = {
-			// 	...oldListOfTasks[parent],
-			// 	"subtasks": {
-			// 		...copyOfParentSubtasks,
-			// 		[id]: {
+			// Update Child
+			let childTask = parentTask['subtasks'][id];
+			childTask = {
+				...childTask,
+				content: newContent,
+			};
 
-			// 		}
-			// 	}
-			// }
+			// Update Parent
+			parentTask = {
+				...parentTask,
+				subtasks: {
+					[id]: { ...childTask },
+				},
+			};
+
+			// Update List Of Tasks
+			oldListOfTasks = {
+				...oldListOfTasks,
+				[parent]: { ...parentTask },
+			};
+
 			setTasks({ ...oldListOfTasks });
 		}
-	}
+	};
 
-	function deleteSubtask(id: string, parent: string) {
+	const toggleSubtask = (id: string, parent: string) => {
+		let oldListOfTasks = { ...tasks };
+		let parentTask = oldListOfTasks[parent];
+
+		if (parentTask['subtasks']) {
+			// Update Child
+			let childTask = parentTask['subtasks'][id];
+			childTask = {
+				...childTask,
+				completed: !childTask.completed,
+			};
+
+			// Update Parent
+			parentTask = {
+				...parentTask,
+				subtasks: {
+					[id]: { ...childTask },
+				},
+			};
+
+			// Update List Of Tasks
+			oldListOfTasks = {
+				...oldListOfTasks,
+				[parent]: { ...parentTask },
+			};
+
+			setTasks({ ...oldListOfTasks });
+		}
+	};
+
+	const deleteSubtask = (id: string, parent: string) => {
 		let oldListOfTasks = { ...tasks };
 		let updatedParentTask = oldListOfTasks[parent];
 		if (updatedParentTask['subtasks']) {
@@ -148,16 +198,16 @@ function Tasks({ visible }: Props) {
 			};
 			setTasks({ ...oldListOfTasks });
 		}
-	}
+	};
 
 	return (
 		<Section
 			isVisible={visible}
 			uniqueKey="tasks"
-			sx="max-w-screen-2xl mx-auto flex flex-col  text-base md:text-lg"
+			sx="max-w-screen-sm mx-auto flex flex-col items-start text-lg"
 		>
 			{tasks && Object.keys(tasks).length > 0 && (
-				<ul className="flex flex-col gap-y-3 mb-3">
+				<ul className="flex flex-col w-full">
 					{Object.entries(tasks).map(([id, task]) => (
 						<SingleTask
 							key={id}
@@ -178,7 +228,11 @@ function Tasks({ visible }: Props) {
 			)}
 
 			{/* New Task Form */}
-			<TaskForm addTask={addTask} subtask={false} />
+			<TaskForm
+				addTask={addTask}
+				subtask={false}
+				otherTaskPresent={tasks && Object.keys(tasks).length > 0 ? true : false}
+			/>
 		</Section>
 	);
 }

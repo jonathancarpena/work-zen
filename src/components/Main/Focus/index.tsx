@@ -69,7 +69,7 @@ function Focus({ visible }: Props) {
 		}
 	}, [timer, stageIndex]);
 
-	function handleTimerButton() {
+	const handleTimerButton = () => {
 		if (activeTimer) {
 			handleFocusAudio(false);
 		} else {
@@ -79,53 +79,33 @@ function Focus({ visible }: Props) {
 			}
 		}
 		dispatch(toggleTimer(!activeTimer));
-	}
+	};
 
-	function handleNext() {
-		dispatch(nextStage());
-		handleTimerButton();
-	}
-
-	function handleStageChange(num: number) {
-		let confirm = true;
-		if (activeTimer) {
-			confirm = window.confirm(
-				'The timer is still running, are you sure you want to switch?'
-			);
+	const handleNext = () => {
+		if (activeTimer && alertUser()) {
+			dispatch(nextStage());
+			handleTimerButton();
 		}
+	};
 
-		if (confirm) {
+	const handleStageChange = (num: number) => {
+		if (activeTimer && alertUser()) {
 			dispatch(stageSelect(num));
 			dispatch(toggleTimer(false));
 			handleFocusAudio(false);
 			handleAlarmAudio(false);
 		}
-	}
+	};
 
-	function handleAlarmAudio(input: boolean) {
-		if (input) {
-			if (settings['alarm volume'] > 0) {
-				alarmAudioPlayer.current.play();
-			}
-		} else {
-			alarmAudioPlayer.current.pause();
-		}
-	}
-
-	function handleFocusAudio(input: boolean) {
-		if (input) {
-			if (settings['focus volume'] > 0) {
-				focusAudioPlayer.current.play();
-			}
-		} else {
-			focusAudioPlayer.current.pause();
-		}
-	}
-
-	function handleResetCounter() {
-		dispatch(resetCounter());
-	}
-
+	const handleAlarmAudio = (input: boolean) =>
+		input ? alarmAudioPlayer.current.play() : alarmAudioPlayer.current.pause();
+	const handleFocusAudio = (input: boolean) =>
+		input ? focusAudioPlayer.current.play() : focusAudioPlayer.current.pause();
+	const handleResetCounter = () => dispatch(resetCounter());
+	const alertUser = () =>
+		window.confirm(
+			'The timer is still running, are you sure you want to switch?'
+		);
 	function generateMotivatingMessage() {
 		return (
 			<h4 className="text-center  text-sm md:text-base mb-2">
