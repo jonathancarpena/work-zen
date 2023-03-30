@@ -33,12 +33,7 @@ export interface Task {
 	[id: string]: {
 		completed: boolean;
 		content: string;
-		subtask?: {
-			[id: string]: {
-				completed: boolean;
-				content: string;
-			};
-		};
+		subtasks?: Subtask;
 	};
 }
 export interface Subtask {

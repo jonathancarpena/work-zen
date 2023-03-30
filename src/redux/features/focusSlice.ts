@@ -1,11 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit/';
 import type { RootState } from '../store';
-import {
-	FocusSettings,
-	FocusSettingsKeys,
-	TimerStages,
-} from '../../lib/interfaces';
+import { FocusSettings, FocusSettingsKeys } from '../../lib/interfaces';
 import { minutesToSeconds, TIMERSTAGES } from '../../lib/utils';
 
 interface FocusState {
@@ -90,7 +86,8 @@ export const focusSlice = createSlice({
 
 			// After # of Focus Modes
 			const takeLongBreak =
-				state.counter % state.settings['long break intervals'] === 0;
+				state.counter % state.settings['long break intervals'] === 0 &&
+				state.counter >= 1;
 
 			if (takeLongBreak && theNextStage !== 3) {
 				theNextStage = 2;
@@ -122,10 +119,6 @@ export const {
 } = focusSlice.actions;
 
 // Selectors
-export const timer = (state: RootState['focus']) => state.timer;
-export const activeTimer = (state: RootState['focus']) => state.activeTimer;
-export const stage = (state: RootState['focus']) => TIMERSTAGES[state.stage];
-export const settings = (state: RootState['focus']) => state.settings;
-export const counter = (state: RootState['focus']) => state.counter;
+export const focus = (state: RootState['focus']) => state;
 
 export default focusSlice.reducer;

@@ -1,11 +1,12 @@
-import { useTab } from '../../context/Tab';
+import { useAppSelector } from '../../redux/hooks';
+
 import Focus from './Focus';
 import Calculator from './Calculator';
 // import Notes from './Notes';
 import Tasks from './Tasks';
 
 function Main() {
-	const tab = useTab();
+	const tab = useAppSelector((state) => state.tabs.current);
 
 	return (
 		<>

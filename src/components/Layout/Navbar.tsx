@@ -1,5 +1,6 @@
-// Context
-import { useTab, useTabUpdate } from '../../context/Tab';
+// Redux
+import { useAppSelector, useAppDispatch } from '../../redux/hooks';
+import { updateTab } from '../../redux/features/tabSlice';
 
 // Components
 import { FiCrosshair, FiHash, FiEdit2, FiClipboard } from 'react-icons/fi';
@@ -13,14 +14,18 @@ interface NavItems {
 	icon: any;
 }
 function Navbar() {
-	const tab = useTab();
-	const handleTabUpdate = useTabUpdate();
+	const tab = useAppSelector((state) => state.tabs.current);
+	const dispatch = useAppDispatch();
 	const NavItems: NavItems[] = [
 		{ value: 'focus', icon: <FiCrosshair /> },
 		// { value: 'notes', icon: <FiEdit2 /> },
 		{ value: 'tasks', icon: <FiClipboard /> },
 		{ value: 'calculator', icon: <FiHash /> },
 	];
+
+	function handleClick(input: TabOptions) {
+		dispatch(updateTab(input));
+	}
 	return (
 		<>
 			{/* Notch Div */}
@@ -31,7 +36,7 @@ function Navbar() {
 						<li key={`NavItem-${item.value}`}>
 							<IconButton
 								active={tab === item.value}
-								onClick={() => handleTabUpdate(item.value)}
+								onClick={() => handleClick(item.value)}
 							>
 								{item.icon}
 							</IconButton>

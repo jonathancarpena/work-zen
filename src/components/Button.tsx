@@ -69,13 +69,21 @@ export function IconButton({
 								? 'active:scale-90 lg:hover:bg-white lg:dark:hover:bg-main-dark-lighter'
 								: ''
 					  }`
-			}  ${block ? 'w-full' : 'w-11 md:w-14 '} ${
-				size === 'sm' ? 'h-8 md:h-10' : ''
-			} 	${size === 'md' ? 'h-11 md:h-14' : ''} ${
-				size === 'lg' ? 'h-16 md:h-20' : ''
+			}  ${block ? 'w-full' : 'w-max'} ${
+				size === 'sm'
+					? 'h-8 md:h-10 w-8 md:w-10 rounded-md md:rounded-lg text-base md:text-lg'
+					: ''
+			} 	${
+				size === 'md'
+					? 'h-11 md:h-14 w-11 md:w-14 rounded-lg md:rounded-xl text-xl md:text-2xl'
+					: ''
+			} ${
+				size === 'lg'
+					? 'h-16 md:h-20 w-16 md:w-20 rounded-lg md:rounded-xl text-xl md:text-2xl'
+					: ''
 			}  
-		rounded-lg md:rounded-xl
-			flex justify-center items-center  transition-transform duration-100 border border-pureBlack dark:border-white text-xl md:text-2xl select-none ${sx}`}
+		aspect-square
+			flex justify-center items-center  transition-transform duration-100 border border-pureBlack dark:border-white  select-none ${sx}`}
 		>
 			{children}
 		</button>

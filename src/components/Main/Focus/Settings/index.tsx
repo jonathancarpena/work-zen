@@ -98,7 +98,7 @@ function Settings() {
 								type="number"
 								name="focus mode"
 								className="bg-main-light-darker p-2 rounded-sm focus:bg-main-light-lighter focus:outline-main-dark-darker text-start dark:bg-main-dark-darker dark:focus:bg-main-dark-lighter  "
-								min={1}
+								min={0.5}
 								max={99}
 								step={0.5}
 								value={settings['focus mode']}
@@ -117,7 +117,7 @@ function Settings() {
 								id="shortBreak"
 								type="number"
 								name="short break"
-								min={1}
+								min={0.5}
 								step={0.5}
 								max={99}
 								className="bg-main-light-darker p-2 rounded-sm focus:bg-main-light-lighter focus:outline-main-dark-darker text-start dark:bg-main-dark-darker dark:focus:bg-main-dark-lighter  "
@@ -138,7 +138,7 @@ function Settings() {
 								type="number"
 								name="long break"
 								step={0.5}
-								min={1}
+								min={0.5}
 								max={99}
 								className="bg-main-light-darker p-2 rounded-sm focus:bg-main-light-lighter focus:outline-main-dark-darker text-start dark:bg-main-dark-darker dark:focus:bg-main-dark-lighter  "
 								value={settings['long break']}

@@ -5,7 +5,6 @@ import './index.css';
 
 // Context Poviders
 import DarkModeProvider from './context/DarkMode';
-import TabProvider from './context/Tab';
 import { Provider as ReduxProvider } from 'react-redux';
 import { store } from './redux/store';
 
@@ -13,9 +12,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<React.StrictMode>
 		<DarkModeProvider>
 			<ReduxProvider store={store}>
-				<TabProvider>
-					<App />
-				</TabProvider>
+				<App />
 			</ReduxProvider>
 		</DarkModeProvider>
 	</React.StrictMode>
