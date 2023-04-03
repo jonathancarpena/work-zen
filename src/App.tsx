@@ -26,8 +26,4 @@ function App() {
 
 export default App;
 
-// npx pwa-asset-generator public/light-logo.svg public -m public/site.webmanifest --padding "calc(50vh - 25%) calc(50vw - 25%)" -b "#FAFAFA" -q 100 -i public/asset-generator-changes.html --favicon
-
-// npx pwa-asset-generator public/dark-logo.svg public -m public/site.webmanifest --padding "calc(50vh - 25%) calc(50vw - 25%)" -b "#FAFAFA" -q 100 -i public/asset-generator-changes.html --favicon
-
 // npx pwa-asset-generator public/logo.svg public -m public/site.webmanifest -p "calc(50vh - 25%) calc(50vw - 25%)" -q 100 -i public/asset-generator-changes.html
