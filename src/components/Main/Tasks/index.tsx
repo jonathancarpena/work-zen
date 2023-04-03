@@ -61,27 +61,16 @@ function Tasks({ visible }: Props) {
 		}
 	};
 
-	const editTask = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-		const taskId = e.currentTarget.name;
-		const newContent = e.currentTarget.value;
-
-		if (e.key === 'Enter') {
-			e.preventDefault();
-		}
-
-		if (tasks && newContent.length > 0) {
-			let oldTask = tasks[taskId];
+	const editTask = (id: string, content: string) => {
+		if (tasks && content.length > 0) {
+			let oldTask = tasks[id];
 			setTasks({
 				...tasks,
-				[taskId]: {
+				[id]: {
 					...oldTask,
-					content: newContent,
+					content: content,
 				},
 			});
-		} else {
-			if (e.key === 'Delete' || e.key === 'Backspace') {
-				deleteTask(taskId);
-			}
 		}
 	};
 
@@ -119,15 +108,7 @@ function Tasks({ visible }: Props) {
 		}
 	};
 
-	const editSubtask = (
-		e: React.KeyboardEvent<HTMLTextAreaElement>,
-		parent: string
-	) => {
-		const id = e.currentTarget.name;
-		const newContent = e.currentTarget.value;
-		if (e.key === 'Enter') {
-			e.preventDefault();
-		}
+	const editSubtask = (id: string, content: string, parent: string) => {
 		let oldListOfTasks = { ...tasks };
 		let parentTask = oldListOfTasks[parent];
 
@@ -136,7 +117,7 @@ function Tasks({ visible }: Props) {
 			let childTask = parentTask['subtasks'][id];
 			childTask = {
 				...childTask,
-				content: newContent,
+				content: content,
 			};
 
 			// Update Parent
@@ -204,8 +185,9 @@ function Tasks({ visible }: Props) {
 		<Section
 			isVisible={visible}
 			uniqueKey="tasks"
-			sx="max-w-screen-sm mx-auto flex flex-col items-start text-lg"
+			sx="max-w-screen-sm mx-auto flex flex-col items-start md:text-lg"
 		>
+			<h1 className="text-3xl mb-3 font-bold">My Tasks</h1>
 			{tasks && Object.keys(tasks).length > 0 && (
 				<ul className="flex flex-col w-full">
 					{Object.entries(tasks).map(([id, task]) => (
