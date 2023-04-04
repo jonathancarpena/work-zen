@@ -1,4 +1,5 @@
 import { TimerStages } from './interfaces';
+import type { Button } from './interfaces';
 type StringNum = string | number;
 
 export function minutesToSeconds(minutes: number): number {

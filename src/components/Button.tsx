@@ -2,7 +2,8 @@ import React from 'react';
 
 interface Props {
 	children?: React.ReactNode;
-	onClick?: () => void;
+	value?: string;
+	onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 	disabled?: boolean;
 	block?: boolean;
 	active?: boolean;
@@ -20,6 +21,7 @@ function Button({
 	size = 'md',
 	disabled = false,
 	block = true,
+	value = '',
 	sx,
 }: Props) {
 	return (
@@ -27,6 +29,7 @@ function Button({
 			type={type}
 			disabled={disabled}
 			onClick={onClick}
+			value={value}
 			className={`${
 				active
 					? 'bg-main-dark-darker text-white dark:bg-main-light-lighter dark:text-black '

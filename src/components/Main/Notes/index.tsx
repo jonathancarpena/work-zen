@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useId } from 'react';
 
 // Components
 import Button from '../../Button';
@@ -15,7 +15,7 @@ function Notes({ visible }: Props) {
 	const [listOfNotes, setListOfNotes] = useState<Note[] | null>(null);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [note, setNote] = useState<Note>({
-		id: `${Math.random()}`,
+		id: `${useId()}`,
 		title: '',
 		body: '',
 	});
