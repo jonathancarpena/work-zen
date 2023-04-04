@@ -36,7 +36,7 @@ function Button({
 					: `bg-inherit text-black  dark:text-white  ${
 							!disabled
 								? 'active:scale-90 lg:hover:bg-white lg:dark:hover:bg-main-dark-lighter'
-								: ''
+								: 'opacity-50'
 					  }  `
 			}  ${block ? 'w-full rounded-md' : 'w-max rounded-md px-4'} ${
 				size === 'sm' ? 'h-8 md:h-10 text-sm md:text-lg' : ''

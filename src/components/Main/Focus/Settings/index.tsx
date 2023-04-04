@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { updateSettings } from '../../../../redux/features/focusSlice';
 import { useAppSelector, useAppDispatch } from '../../../../redux/hooks';
 
@@ -40,16 +40,19 @@ function Settings() {
 			}
 		}
 
-		if (open) {
-			settingsAudioPlayer.current.volume = volume;
-			settingsAudioPlayer.current.play();
+		settingsAudioPlayer.current.volume = volume;
+		settingsAudioPlayer.current.play();
 
-			setTimeout(() => {
-				settingsAudioPlayer.current.pause();
-			}, 3000);
-		}
+		setTimeout(() => {
+			settingsAudioPlayer.current.pause();
+		}, 3000);
 	}
 
+	useEffect(() => {
+		if (!open) {
+			settingsAudioPlayer.current.pause();
+		}
+	}, [open]);
 	function generateAudioUrl() {
 		let basePath = '/assets/sounds';
 		return audioPlaying === 'alarm volume'

@@ -53,6 +53,12 @@ function Focus({ visible }: Props) {
 	// Volume Change
 	useEffect(() => {
 		alarmAudioPlayer.current.volume = settings['alarm volume'];
+
+		if (activeTimer && settings['focus volume']) {
+			handleFocusAudio(true);
+		} else {
+			handleFocusAudio(false);
+		}
 		focusAudioPlayer.current.volume = settings['focus volume'];
 	}, [settings['alarm volume'], settings['focus volume']]);
 
@@ -89,7 +95,15 @@ function Focus({ visible }: Props) {
 	};
 
 	const handleStageChange = (num: number) => {
-		if (activeTimer && alertUser()) {
+		if (activeTimer) {
+			const proceed = alertUser();
+			if (proceed) {
+				dispatch(stageSelect(num));
+				dispatch(toggleTimer(false));
+				handleFocusAudio(false);
+				handleAlarmAudio(false);
+			}
+		} else {
 			dispatch(stageSelect(num));
 			dispatch(toggleTimer(false));
 			handleFocusAudio(false);
@@ -98,9 +112,13 @@ function Focus({ visible }: Props) {
 	};
 
 	const handleAlarmAudio = (input: boolean) =>
-		input ? alarmAudioPlayer.current.play() : alarmAudioPlayer.current.pause();
+		input && settings['alarm volume']
+			? alarmAudioPlayer.current.play()
+			: alarmAudioPlayer.current.pause();
 	const handleFocusAudio = (input: boolean) =>
-		input ? focusAudioPlayer.current.play() : focusAudioPlayer.current.pause();
+		input && settings['focus volume']
+			? focusAudioPlayer.current.play()
+			: focusAudioPlayer.current.pause();
 	const handleResetCounter = () => dispatch(resetCounter());
 	const alertUser = () =>
 		window.confirm(
