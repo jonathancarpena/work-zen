@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 
 // Components
-import Layout from './components/Layout';
 import Main from './components/Main';
 
 function App() {
@@ -17,10 +16,11 @@ function App() {
 			return () => window.removeEventListener('resize', handleResize);
 		}
 	});
+
 	return (
-		<Layout>
+		<>
 			<Main />
-		</Layout>
+		</>
 	);
 }
 

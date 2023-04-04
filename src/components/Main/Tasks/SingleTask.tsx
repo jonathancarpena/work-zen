@@ -65,7 +65,7 @@ function SingleTask({
 	return (
 		<li className="flex flex-col items-end  ">
 			{/* Task Content */}
-			<div className="flex items-start space-x-3 mb-3 w-full">
+			<div className="flex items-center space-x-3 mb-3 w-full">
 				<Checkbox
 					onClick={handleCheckboxClick}
 					checked={completed}

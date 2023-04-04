@@ -55,7 +55,7 @@ function TaskForm({
 			onSubmit={handleSubmit}
 			className={`${
 				otherTaskPresent ? `${focus ? '' : 'opacity-25'}` : ''
-			} flex items-start gap-x-3 ${
+			} flex items-center gap-x-3 mt-1 ${
 				subtask ? 'w-11/12 mb-5  pr-10' : 'w-full pr-24 '
 			} `}
 		>
