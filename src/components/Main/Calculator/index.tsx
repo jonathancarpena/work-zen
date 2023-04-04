@@ -39,7 +39,7 @@ function Calculator({ visible }: Props) {
 					{input.map((item, index) => (
 						<span
 							key={`calc-input-${index}`}
-							className={`${item.type === 'OPERATOR' ? 'mx-5' : ''} ${
+							className={`${item.type === 'OPERATOR' ? 'mx-1' : ''} ${
 								item.type === 'NEGATIVE' ? 'text-red-500 ' : ''
 							}`}
 						>
@@ -56,9 +56,9 @@ function Calculator({ visible }: Props) {
 
 		return (
 			<p
-				className={`col-span-4 text-8xl ${
+				className={`col-span-4 text-6xl md:text-8xl ${
 					!input.length && !output ? 'opacity-50' : ''
-				}  overflow-x-auto overflow-y-hidden`}
+				}  overflow-x-auto overflow-y-hidden text-end`}
 			>
 				{child}
 			</p>
