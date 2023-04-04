@@ -71,7 +71,8 @@ function Focus({ visible }: Props) {
 			setTimeout(() => {
 				handleAlarmAudio(false);
 			}, alarmRepeat);
-			handleNext();
+			dispatch(nextStage());
+			dispatch(toggleTimer(!activeTimer));
 		}
 	}, [timer, stageIndex]);
 
