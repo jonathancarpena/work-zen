@@ -39,12 +39,11 @@ function Button({
 								: ''
 					  }  `
 			}  ${block ? 'w-full rounded-md' : 'w-max rounded-md px-4'} ${
-				size === 'sm' ? 'h-8 md:h-10' : ''
-			} 		${size === 'md' ? 'h-11 md:h-14' : ''} ${
-				size === 'lg' ? 'h-16 md:h-20' : ''
+				size === 'sm' ? 'h-8 md:h-10 text-sm md:text-lg' : ''
+			} 		${size === 'md' ? 'h-11 md:h-14 text-sm md:text-lg' : ''} ${
+				size === 'lg' ? 'h-16 md:h-20 text-2xl md:text-3xl' : ''
 			}  
-			
-			flex justify-center items-center  transition-transform duration-100 border border-pureBlack dark:border-white text-sm md:text-lg select-none ${sx}`}
+			flex justify-center items-center  transition-transform duration-100 border border-pureBlack dark:border-white  select-none ${sx}`}
 		>
 			{children}
 		</button>

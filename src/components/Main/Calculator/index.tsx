@@ -78,8 +78,9 @@ function Calculator({ visible }: Props) {
 					<Button
 						key={generateKey(item)}
 						onClick={handleClick}
-						sx={`${item.span ? item.span : ''} `}
+						sx={`${item.span ? item.span : ''}`}
 						value={JSON.stringify(item)}
+						size="lg"
 					>
 						{item.key}
 					</Button>
